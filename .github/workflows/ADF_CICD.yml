@@ -24,6 +24,7 @@ jobs:
       - name: Install ADF Utilities package
         run: npm install
         working-directory: ${{ github.workspace }}/ADF_Pipeline/Ingestion/build
+        echo ${{ github.workspace }}
 
       - name: Validate ADF resources
         run: npm run build validate ${{ github.workspace }}/ADF_Pipeline/Ingestion /subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/ADF-RG-DEV/providers/Microsoft.DataFactory/factories/adf-uksouth-dev
