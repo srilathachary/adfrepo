@@ -32,11 +32,20 @@ jobs:
         run: |
           curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
+      # - name: Log in to Azure
+      #   run: |
+      #     az login \
+      #     --service-principal \
+      #       -u "$AZURE_CLIENT_ID" \
+      #       -p "$AZURE_CLIENT_SECRET" \
+      #       --tenant "$AZURE_TENANT_ID"
+      #     az account set --subscription "$AZURE_SUBSCRIPTION_ID"
       - name: Log in to Azure
         run: |
-          az login --service-principal \
-            -u "$AZURE_CLIENT_ID" \
-            -p "$AZURE_CLIENT_SECRET" \
+          az login \
+            --service-principal \
+            --username $AZURE_CLIENT_ID \
+            --password "$AZURE_CLIENT_SECRET" \
             --tenant "$AZURE_TENANT_ID"
           az account set --subscription "$AZURE_SUBSCRIPTION_ID"
 
