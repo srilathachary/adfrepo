@@ -26,11 +26,11 @@ jobs:
         working-directory: ${{ github.workspace }}/ADF_Pipeline/Ingestion/build
 
       - name: Validate ADF resources
-        run: npm run build validate ${{ github.workspace }}/ /subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/ADF-RG-DEV/providers/Microsoft.DataFactory/factories/adf-uksouth-dev
+        run: npm run build validate ${{ github.workspace }}/ADF_Pipeline/Ingestion /subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/ADF-RG-DEV/providers/Microsoft.DataFactory/factories/adf-uksouth-dev
         #working-directory: ${{ github.workspace }}/build
 
       - name: Validate and Generate ARM template
-        run: npm run build export ${{ github.workspace }}/ /subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/ADF-RG-DEV/providers/Microsoft.DataFactory/factories/adf-uksouth-dev ExportedArmTemplate
+        run: npm run build export ${{ github.workspace }}/ADF_Pipeline/Ingestion /subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/ADF-RG-DEV/providers/Microsoft.DataFactory/factories/adf-uksouth-dev ExportedArmTemplate
         #working-directory: ${{ github.workspace }}/build
 
       - name: Upload ARM template artifact
