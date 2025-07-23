@@ -1,0 +1,68 @@
+{
+	"name": "DS_Dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "SalesOrderHeader.csv",
+				"fileSystem": "data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "SalesOrderID",
+				"type": "String"
+			},
+			{
+				"name": "OrderDate",
+				"type": "String"
+			},
+			{
+				"name": "Status",
+				"type": "String"
+			},
+			{
+				"name": "SalesOrderNumber",
+				"type": "String"
+			},
+			{
+				"name": "CustomerID",
+				"type": "String"
+			},
+			{
+				"name": "SalesPersonID",
+				"type": "String"
+			},
+			{
+				"name": "TerritoryID",
+				"type": "String"
+			},
+			{
+				"name": "SubTotal",
+				"type": "String"
+			},
+			{
+				"name": "TaxAmt",
+				"type": "String"
+			},
+			{
+				"name": "Freight",
+				"type": "String"
+			},
+			{
+				"name": "TotalDue",
+				"type": "String"
+			}
+		]
+	}
+}
