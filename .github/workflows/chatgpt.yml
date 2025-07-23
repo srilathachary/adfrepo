@@ -1,0 +1,75 @@
+name: ADF CI/CD Pipeline
+
+on:
+  workflow_dispatch:
+
+env:
+  AZURE_ADF_RESOURCE_GROUP: Ravi_RG
+  AZURE_SUBSCRIPTION_ID: 3915c783-2b04-4f6f-94d4-8d3ac1d3deb5
+  AZURE_CLIENT_ID: a045faaf-ea6b-4bf8-86d0-6f932f46cf34
+  AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  AZURE_TENANT_ID: 5f6ff5cb-7984-4efe-a3ef-6d2cfb07684a
+
+jobs:
+  deploy-adf:
+    name: Deploy ADF Resources
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        environment: [dev, test, prod]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache Azure CLI
+        uses: actions/cache@v4
+        with:
+          path: ~/.azure/cli
+          key: azure-cli-${{ runner.os }}
+
+      - name: Install Azure CLI
+        run: |
+          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+      - name: Log in to Azure
+        run: |
+          az login --service-principal \
+            -u "$AZURE_CLIENT_ID" \
+            -p "$AZURE_CLIENT_SECRET" \
+            --tenant "$AZURE_TENANT_ID"
+          az account set --subscription "$AZURE_SUBSCRIPTION_ID"
+
+      - name: Install ADF tools (ARM or az extension)
+        run: |
+          az extension add --name datafactory --yes || true
+
+      - name: Validate ADF ARM templates
+        run: |
+          echo "Validating ADF resources for ${{ matrix.environment }}..."
+          az deployment group validate \
+            --resource-group $AZURE_ADF_RESOURCE_GROUP-${{ matrix.environment }} \
+            --template-file adf/ARMTemplateForFactory.json \
+            --parameters @adf/ARMTemplateParametersForFactory.json
+
+      - name: Deploy ADF templates
+        run: |
+          echo "Deploying ADF resources to ${{ matrix.environment }}..."
+          az deployment group create \
+            --resource-group $AZURE_ADF_RESOURCE_GROUP-${{ matrix.environment }} \
+            --template-file adf/ARMTemplateForFactory.json \
+            --parameters @adf/ARMTemplateParametersForFactory.json \
+            --verbose
+
+      - name: Post-deployment checks (optional validation step)
+        run: |
+          echo "Verifying deployment in ${{ matrix.environment }}..."
+          az datafactory pipeline list \
+            --resource-group $AZURE_ADF_RESOURCE_GROUP-${{ matrix.environment }} \
+            --factory-name my-adf-${{ matrix.environment }}
+
+      - name: Rollback mechanism (placeholder)
+        if: failure()
+        run: |
+          echo "Deployment failed in ${{ matrix.environment }}. Triggering rollback..."
+          # Add rollback script or reference to stable version here
