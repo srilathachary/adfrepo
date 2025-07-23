@@ -1,0 +1,66 @@
+name: azure-adf-cicd-project
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Install ADF Utilities package
+        run: npm install
+        working-directory: ${{ github.workspace }}/build
+
+      - name: Validate ADF resources
+        run: npm run build validate ${{ github.workspace }}/ /subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/ADF-RG-DEV/providers/Microsoft.DataFactory/factories/adf-uksouth-dev
+        working-directory: ${{ github.workspace }}/build
+
+      - name: Validate and Generate ARM template
+        run: npm run build export ${{ github.workspace }}/ /subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/ADF-RG-DEV/providers/Microsoft.DataFactory/factories/adf-uksouth-dev ExportedArmTemplate
+        working-directory: ${{ github.workspace }}/build
+
+      - name: Upload ARM template artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ExportedArmTemplate
+          path: ${{ github.workspace }}/build/ExportedArmTemplate
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ExportedArmTemplate
+
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true
+
+      - name: Deploy to Data Factory
+        uses: Azure/data-factory-deploy-action@v1.2.0
+        with:
+          resourceGroupName: <test-adf-resource-group>
+          dataFactoryName: <test-adf-name>
+          armTemplateFile: ARMTemplateForFactory.json
+          armTemplateParametersFile: ARMTemplateParametersForFactory.json
+          # additionalParameters: 'factoryName=Test-ADF-111' # optional, if needed for dynamic replacements
