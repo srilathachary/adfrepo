@@ -26,11 +26,11 @@ jobs:
 
 
       - name: Validate ADF resources
-        run: npm run build validate ${{ github.workspace }}/ADF_Pipeline/Ingestion /subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/ADF-RG-DEV/providers/Microsoft.DataFactory/factories/adf-uksouth-dev
+        run: npm run build validate ${{ github.workspace }}/ADF_Pipeline/Ingestion /subscriptions/3915c783-2b04-4f6f-94d4-8d3ac1d3deb5/resourceGroups/Ravi_RG/providers/Microsoft.DataFactory/factories/practiceadf20252025
 
 
       - name: Validate and Generate ARM template
-        run: npm run build export ${{ github.workspace }}/ADF_Pipeline/Ingestion /subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/ADF-RG-DEV/providers/Microsoft.DataFactory/factories/adf-uksouth-dev ExportedArmTemplate
+        run: npm run build export ${{ github.workspace }}/ADF_Pipeline/Ingestion /subscriptions/3915c783-2b04-4f6f-94d4-8d3ac1d3deb5/resourceGroups/Ravi_RG/providers/Microsoft.DataFactory/factories/practiceadf20252025 ExportedArmTemplate
 
 
       - name: Upload ARM template artifact
@@ -51,16 +51,16 @@ jobs:
       - name: Azure login
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-id: a045faaf-ea6b-4bf8-86d0-6f932f46cf34
+          tenant-id: 5f6ff5cb-7984-4efe-a3ef-6d2cfb07684a
+          subscription-id: 3915c783-2b04-4f6f-94d4-8d3ac1d3deb5
           enable-AzPSSession: true
 
       - name: Deploy to Data Factory
         uses: Azure/data-factory-deploy-action@v1.2.0
         with:
-          resourceGroupName: <test-adf-resource-group>
-          dataFactoryName: <test-adf-name>
+          resourceGroupName: Ravi_RG
+          dataFactoryName: practiceadf20252025
           armTemplateFile: ARMTemplateForFactory.json
           armTemplateParametersFile: ARMTemplateParametersForFactory.json
           # additionalParameters: 'factoryName=Test-ADF-111' # optional, if needed for dynamic replacements
