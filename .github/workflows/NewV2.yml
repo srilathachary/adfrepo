@@ -1,4 +1,4 @@
-name: ADF CI/CD: Generate & Deploy ARM Templates
+name: Generate & Deploy ARM Templates
 
 on:
   workflow_dispatch:
