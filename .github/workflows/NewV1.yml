@@ -1,0 +1,43 @@
+name: ADF CI/CD Dev to Test
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AZURE_SUBSCRIPTION_ID: 3915c783-2b04-4f6f-94d4-8d3ac1d3deb5
+  AZURE_CLIENT_ID: a045faaf-ea6b-4bf8-86d0-6f932f46cf34
+  AZURE_TENANT_ID: 5f6ff5cb-7984-4efe-a3ef-6d2cfb07684a
+  AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  RESOURCE_GROUP_NAME: Ravi_RG
+  DATA_FACTORY_NAME: practiceadf20252025
+
+jobs:
+  deploy-adf:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Azure Login
+      uses: azure/login@v2
+      with:
+        client-id: ${{ env.AZURE_CLIENT_ID }}
+        tenant-id: ${{ env.AZURE_TENANT_ID }}
+        subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+        client-secret: ${{ env.AZURE_CLIENT_SECRET }}
+
+    - name: Deploy ADF to Test (ARM Template)
+      uses: azure/arm-deploy@v2
+      with:
+        subscriptionId: ${{ env.AZURE_SUBSCRIPTION_ID }}
+        resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
+        template: ADF_Pipeline/Ingestion/ARMTemplateForFactory.json
+        parameters: ADF_Pipeline/Ingestion/arm-template-parameters-test.json
+        deploymentName: adf-deploy-test-${{ github.run_number }}
+        failOnStdErr: false
+
+    - name: Logout from Azure
+      run: az logout
