@@ -1,0 +1,74 @@
+name: ADF CI/CD: Generate & Deploy ARM Templates
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'ADF_Pipeline/Ingestion/**'
+      - '.github/workflows/adf_ci_cd.yml'
+
+env:
+  AZURE_SUBSCRIPTION_ID: 3915c783-2b04-4f6f-94d4-8d3ac1d3deb5
+  AZURE_CLIENT_ID: a045faaf-ea6b-4bf8-86d0-6f932f46cf34
+  AZURE_TENANT_ID: 5f6ff5cb-7984-4efe-a3ef-6d2cfb07684a
+  AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  DEV_RESOURCE_GROUP: "Ravi_RG"
+  DEV_DATA_FACTORY: "practiceadf20252025"
+  TEST_RESOURCE_GROUP: "<Test-Resource-Group>"
+  TEST_DATA_FACTORY: "<Test-ADF-Name>"
+  # Path where your ADF source JSONs reside
+  ADF_SOURCE_PATH: "ADF_Pipeline/Ingestion"
+  # Path where ARM templates will be generated
+  ARM_OUTPUT_PATH: "ADF_Pipeline/Ingestion/arm"
+
+jobs:
+  generate-and-deploy:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PowerShell for adfpublish
+        shell: pwsh
+        run: |
+          Install-Module -Name Az.Accounts -Force -Scope CurrentUser -AllowClobber
+          Install-Module -Name adfpublish -Force -Scope CurrentUser -AllowClobber
+
+      - name: Generate ARM templates from ADF JSONs
+        shell: pwsh
+        run: |
+          Import-Module adfpublish
+          $adfRoot = Resolve-Path "${{ env.ADF_SOURCE_PATH }}"
+          $output = "${{ env.ARM_OUTPUT_PATH }}"
+          # Clean up previous output
+          if(Test-Path $output) { Remove-Item -Recurse -Force $output }
+          New-Item -ItemType Directory -Force -Path $output | Out-Null
+          Publish-AdfV2FromJson `
+            -RootFolder $adfRoot `
+            -OutputFolder $output `
+            -ResourceGroupName "${{ env.DEV_RESOURCE_GROUP }}" `
+            -DataFactoryName "${{ env.DEV_DATA_FACTORY }}"
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ env.AZURE_CLIENT_ID }}
+          tenant-id: ${{ env.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+          client-secret: ${{ env.AZURE_CLIENT_SECRET }}
+
+      - name: Deploy ARM template to Test ADF
+        uses: azure/arm-deploy@v2
+        with:
+          subscriptionId: ${{ env.AZURE_SUBSCRIPTION_ID }}
+          resourceGroupName: ${{ env.TEST_RESOURCE_GROUP }}
+          template: ${{ env.ARM_OUTPUT_PATH }}/ARMTemplateForFactory.json
+          parameters: ${{ env.ARM_OUTPUT_PATH }}/arm-template-parameters-test.json
+          deploymentName: adf-deploy-test-${{ github.run_number }}
+          failOnStdErr: false
+
+      - name: Logout from Azure
+        run: az logout
