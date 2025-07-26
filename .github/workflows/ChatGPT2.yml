@@ -1,9 +1,7 @@
 name: ChatGpt2 Azure Data Factory CI/CD
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -29,14 +27,14 @@ jobs:
       - name: Validate ADF resources
         working-directory: ADF_Pipeline/Ingestion/build
         run: |
-          npm run validate \
+          npm run build validate \
             -- --root-folder ../../.. \
             --resource-id "/subscriptions/3915c783-2b04-4f6f-94d4-8d3ac1d3deb5/resourceGroups/Ravi_RG/providers/Microsoft.DataFactory/factories/practiceadf20252025"
 
       - name: Export ADF ARM template
         working-directory: ADF_Pipeline/Ingestion/build
         run: |
-          npm run export \
+          npm run build export \
             -- --root-folder ../../.. \
             --resource-id "/subscriptions/3915c783-2b04-4f6f-94d4-8d3ac1d3deb5/resourceGroups/Ravi_RG/providers/Microsoft.DataFactory/factories/practiceadf20252025" \
             --output-folder ./arm-template
