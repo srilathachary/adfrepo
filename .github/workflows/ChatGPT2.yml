@@ -50,8 +50,8 @@ jobs:
       - name: Download ARM template artifact
         uses: actions/download-artifact@v4
         with:
-          name: adf-arm-template
-          path: ./arm-template
+          name: ExportedArmTemplate
+          #path: ./arm-template
 
       - name: Azure Login
         uses: azure/login@v2
