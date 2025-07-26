@@ -54,11 +54,12 @@ jobs:
           #path: ./arm-template
 
       - name: Azure Login
-        uses: azure/login@v2
+        uses: azure/login@v1
         with:
           client-id: a045faaf-ea6b-4bf8-86d0-6f932f46cf34
           tenant-id: 5f6ff5cb-7984-4efe-a3ef-6d2cfb07684a
           subscription-id: 3915c783-2b04-4f6f-94d4-8d3ac1d3deb5
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
 
       - name: Deploy Data Factory ARM template
         uses: Azure/data-factory-deploy-action@v1.2.0
