@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ExportedArmTemplate
-          path: ADF_Pipeline/Ingestion/build/ArmTemplate
+          path: ADF_Pipeline/Ingestion/build/ExportedArmTemplate
 
   release:
     name: Release ADF to Azure
