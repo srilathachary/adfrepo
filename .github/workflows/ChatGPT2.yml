@@ -27,15 +27,13 @@ jobs:
       - name: Validate ADF resources
         working-directory: ADF_Pipeline/Ingestion/build
         run: |
-          npm run build validate \
-            -- --root-folder ../../.. \
+          npm run build validate ../../Ingestion \
             --resource-id "/subscriptions/3915c783-2b04-4f6f-94d4-8d3ac1d3deb5/resourceGroups/Ravi_RG/providers/Microsoft.DataFactory/factories/practiceadf20252025"
 
       - name: Export ADF ARM template
         working-directory: ADF_Pipeline/Ingestion/build
         run: |
-          npm run build export \
-            -- --root-folder ../../.. \
+          npm run build validate ../../Ingestion \
             --resource-id "/subscriptions/3915c783-2b04-4f6f-94d4-8d3ac1d3deb5/resourceGroups/Ravi_RG/providers/Microsoft.DataFactory/factories/practiceadf20252025" \
             --output-folder ./arm-template
 
