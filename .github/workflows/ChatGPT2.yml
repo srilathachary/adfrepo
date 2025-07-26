@@ -61,7 +61,7 @@ jobs:
           subscription-id: 3915c783-2b04-4f6f-94d4-8d3ac1d3deb5
 
       - name: Deploy Data Factory ARM template
-        uses: Azure/data-factory-deploy-action@v1.4.0
+        uses: Azure/data-factory-deploy-action@v1.2.0
         with:
           resourceGroupName: "Ravi_RG"             # 💡 Replace with your Azure Resource Group
           dataFactoryName: "practiceadf20252025"            # 💡 Replace with your Data Factory name
