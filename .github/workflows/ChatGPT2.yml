@@ -41,7 +41,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: adf-arm-template
-          path: ./arm-template
+          path: ADF_Pipeline/Ingestion/build/ArmTemplate
 
   release:
     name: Release ADF to Azure
