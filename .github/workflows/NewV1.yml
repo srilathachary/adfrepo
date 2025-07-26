@@ -1,9 +1,7 @@
 name: ADF CI/CD Dev to Test
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 env:
   AZURE_SUBSCRIPTION_ID: 3915c783-2b04-4f6f-94d4-8d3ac1d3deb5
