@@ -31,14 +31,14 @@ jobs:
         run: |
           npm run validate \
             -- --root-folder ../../.. \
-            --resource-id "/subscriptions/<SUBSCRIPTION_ID>/resourceGroups/<RESOURCE_GROUP>/providers/Microsoft.DataFactory/factories/<DATA_FACTORY_NAME>"
+            --resource-id "/subscriptions/3915c783-2b04-4f6f-94d4-8d3ac1d3deb5/resourceGroups/Ravi_RG/providers/Microsoft.DataFactory/factories/practiceadf20252025"
 
       - name: Export ADF ARM template
         working-directory: ADF_Pipeline/Ingestion/build
         run: |
           npm run export \
             -- --root-folder ../../.. \
-            --resource-id "/subscriptions/<SUBSCRIPTION_ID>/resourceGroups/<RESOURCE_GROUP>/providers/Microsoft.DataFactory/factories/<DATA_FACTORY_NAME>" \
+            --resource-id "/subscriptions/3915c783-2b04-4f6f-94d4-8d3ac1d3deb5/resourceGroups/Ravi_RG/providers/Microsoft.DataFactory/factories/practiceadf20252025" \
             --output-folder ./arm-template
 
       - name: Upload ARM template artifact
