@@ -61,6 +61,7 @@ jobs:
         uses: azure/login@v1.4.6
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
 
       - name: Deploy Data Factory ARM template
         uses: Azure/data-factory-deploy-action@v1.2.0
