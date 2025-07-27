@@ -5,6 +5,7 @@
 		"type": "AzureBlobFS",
 		"typeProperties": {
 			"url": "https://datalake31052025.dfs.core.windows.net/"
-		}
+		},
+		"description": "Dev main branch"
 	}
 }
