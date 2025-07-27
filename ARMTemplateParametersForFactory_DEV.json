@@ -7,6 +7,9 @@
         },
         "LS_AzureDataLakeStorage_properties_typeProperties_url": {
             "value": "https://datalake31052025.dfs.core.windows.net/"
+        },
+        "default_properties_g_param_value": {
+            "value": "main"
         }
     }
 }
