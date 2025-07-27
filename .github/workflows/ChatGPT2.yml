@@ -70,4 +70,4 @@ jobs:
           dataFactoryName: "practiceadf20252025"            # 💡 Replace with your Data Factory name
           armTemplateFile: "./arm-template/ARMTemplateForFactory.json"            # 💡 Confirm filename matches export
           armTemplateParametersFile: "./ARMTemplateParametersForFactory_DEV.json"  # 💡 Check path/name
-          additionalParameters: -factoryName practiceadf20252025  # Required by ADF ARM deployment
+          #additionalParameters: -factoryName practiceadf20252025  # Required by ADF ARM deployment
