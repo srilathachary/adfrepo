@@ -72,5 +72,5 @@ jobs:
           resourceGroupName: "Ravi_RG"             # 💡 Replace with your Azure Resource Group
           dataFactoryName: "practiceadf20252025"            # 💡 Replace with your Data Factory name
           armTemplateFile: "./arm-template/ARMTemplateForFactory.json"            # 💡 Confirm filename matches export
-          armTemplateParametersFile: "./ExportedArmTemplate/ARMTemplateParametersForFactory_DEV.json"  # 💡 Check path/name
+          armTemplateParametersFile: "./arm-template/ARMTemplateParametersForFactory_DEV.json"  # 💡 Check path/name
           additionalParameters: -factoryName practiceadf20252025  # Required by ADF ARM deployment
