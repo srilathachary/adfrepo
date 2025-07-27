@@ -48,7 +48,7 @@ jobs:
     needs: build
     environment: dev
     steps:
-      - name Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Download ARM template artifact
