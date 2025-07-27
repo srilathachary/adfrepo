@@ -1,4 +1,4 @@
-name: ChatGpt2 Azure Data Factory CI/CD
+name: Promote ADF to DEV
 
 on:
   workflow_dispatch:

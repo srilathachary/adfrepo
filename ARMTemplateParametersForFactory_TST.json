@@ -9,7 +9,7 @@
             "value": "https://datalake31052025.dfs.core.windows.net/"
         },
         "default_properties_g_param_value": {
-            "value": "dev"
+            "value": "tst"
         }
     }
 }
