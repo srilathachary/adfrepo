@@ -1,5 +1,13 @@
 {
 	"name": "practiceadf20252025",
+	"properties": {
+		"globalParameters": {
+			"g_param": {
+				"type": "string",
+				"value": "main"
+			}
+		}
+	},
 	"location": "eastus",
 	"identity": {
 		"type": "SystemAssigned",
