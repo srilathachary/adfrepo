@@ -55,7 +55,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ExportedArmTemplate
-          #path: ./arm-template
+          path: ./arm-template
 
 
       - name: Checkout repository
