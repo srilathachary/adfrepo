@@ -1,0 +1,12 @@
+{
+	"name": "LS_RestService",
+	"properties": {
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://8pp3cg.sharepoint.com/sites/test/Lists/Test%20Ravi/AllItems.aspx?startedResponseCatch=true&id=%2Fsites%2Ftest%2FLists%2FTest%20Ravi",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
