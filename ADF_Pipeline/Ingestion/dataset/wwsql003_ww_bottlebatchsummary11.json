@@ -1,0 +1,164 @@
+{
+	"name": "wwsql003_ww_bottlebatchsummary11",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "createdby",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "createdbyname",
+				"type": "varchar"
+			},
+			{
+				"name": "createdon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "modifiedby",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "modifiedbyname",
+				"type": "varchar"
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ownerid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "owneridname",
+				"type": "varchar"
+			},
+			{
+				"name": "owneridtype",
+				"type": "varchar"
+			},
+			{
+				"name": "owningbusinessunit",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "owningbusinessunitname",
+				"type": "varchar"
+			},
+			{
+				"name": "owninguser",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "statuscode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "statuscodename",
+				"type": "varchar"
+			},
+			{
+				"name": "ww_amount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_billofmaterials",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_billofmaterialsname",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_bottlebatch",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bottlebatchsummaryid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_bottlebatchsummaryname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_deleteline",
+				"type": "bit"
+			},
+			{
+				"name": "ww_deletelinename",
+				"type": "varchar"
+			},
+			{
+				"name": "ww_eanbarcode",
+				"type": "varchar"
+			},
+			{
+				"name": "ww_hunumber",
+				"type": "varchar"
+			},
+			{
+				"name": "ww_moldcode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_moldid",
+				"type": "varchar"
+			},
+			{
+				"name": "ww_operatorcode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_palletid",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_productiondate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ww_productionline",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_stockcode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_supplierproductcode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_timeloaded",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ww_bottlebatchsummary"
+		}
+	}
+}

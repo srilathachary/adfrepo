@@ -1,0 +1,59 @@
+{
+	"name": "WWSQL003_ww_qceoryield",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "createdon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ww_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_notes",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_operatorcode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_productionline",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_qceoryieldid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_yieldinvestigationdone",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_run",
+				"type": "uniqueidentifier"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ww_qceoryield"
+		}
+	}
+}

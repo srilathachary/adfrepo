@@ -1,0 +1,20 @@
+{
+	"name": "ADLS_RunStartEndPROD",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dlsadbiotprod",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "iotprod/bronze/dataverse/crc5d_runstartend/landing",
+				"fileSystem": "dls-fs-iot"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

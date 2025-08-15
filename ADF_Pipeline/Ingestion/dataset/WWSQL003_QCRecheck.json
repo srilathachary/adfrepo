@@ -1,0 +1,90 @@
+{
+	"name": "WWSQL003_QCRecheck",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "QC Recheck Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Status",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Alcohol in bottle",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Alcohol percentage",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "Bottle alcohol 1st Tank",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Delete Line",
+				"type": "bit"
+			},
+			{
+				"name": "Operator Code",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Refract BTL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Visual Colour Match (Tank/BTL)",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Created On",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Import Sequence Number",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Modified On",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Record Created On",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "QC Recheck",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "Run",
+				"type": "uniqueidentifier"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "QC Recheck"
+		}
+	}
+}

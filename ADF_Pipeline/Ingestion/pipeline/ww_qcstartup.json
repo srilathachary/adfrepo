@@ -1,0 +1,621 @@
+{
+	"name": "ww_qcstartup",
+	"properties": {
+		"activities": [
+			{
+				"name": "QC Start Up",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Last modifiedon",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource",
+						"query": {
+							"value": "<fetch>\n  <entity name=\"ww_qcstartup\">\n    <all-attributes />\n    <filter>\n      <condition attribute=\"modifiedon\" operator=\"gt\" value=\"@{activity('Last modifiedon').output.firstRow.last_modifiedon}\" />\n    </filter>\n  </entity>\n</fetch>\n",
+							"type": "Expression"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"ww_qcstartupid"
+							]
+						},
+						"sqlWriterUseTableLock": true
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "createdon",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "createdon",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "modifiedon",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "modifiedon",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "statuscode",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "statuscode",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_alcoholinbottle",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_alcoholinbottle",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_alcoholintank",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_alcoholintank",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_alcoholpercentage",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_alcoholpercentage",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_atpswabsnottaken",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_ATPswabsnottaken",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_blsampleattachedtospecsheet",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_blsampleattachedtospecsheet",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_startuptimebottlelasercodetime",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ww_StartUpTimebottlelasercodetime",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_bottlealcoholfirsttank",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_bottlealcoholfirsttank",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_bottlecodeandguiderailsset",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_bottlecodeandguiderailsset",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_bottlecoderrunningandlegible",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_bottlecoderrunningandlegible",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_codeheight",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_codeheight",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_comments",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_comments",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_countzeroed",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_countzeroed",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cunos",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_cunos",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cunosyesno",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_cunosyesno",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_customertankername",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_customertankername",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_dco2",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_DCO2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_do",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_do",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_co2",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_co2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_do2",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_DO2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_foreignmatter",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_foreignmatter",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_microsneeded",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_microsneeded",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_microsneededyesno",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_microsneededyesno",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_noticerequired",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_noticerequired",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_operatorcode",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_operatorcode",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_productionline",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_productionline",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_qcstartupid",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "ww_qcstartupid",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_qcstartupname",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_qcstartupname",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_refract",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_refract",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_refractbtl",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_refractbtl",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_refracttank",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_refracttank",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_rockstopper",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_rockstopper",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_rockstopperyesno",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_rockstopperyesno",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_run",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "ww_run",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_runname",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_runname",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_startdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ww_startdate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_tanker",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_tanker",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_visualcolourmatchtankbtl",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_visualcolourmatchtankbtl",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_wecs",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_wecs",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_wecsyesno",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_wecsyesno",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_winetemperaturefiller",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_WineTemperatureFiller",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_winemakersignatureid",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "ww_winemakersignatureid",
+									"type": "Guid"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "QCStartUp",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "wwsql003_ww_qcstartup",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Merge Statement",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "QC Start Up",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[usp_ww_qcstartup]"
+				},
+				"linkedServiceName": {
+					"referenceName": "WWSQL003",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Data Copy fail email",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "QC Start Up",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-24.australiasoutheast.logic.azure.com:443/workflows/d77213c4f1ec4ab89956fb3256ee6f0b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=JdvR2R2i-AADVzAwGjO9cFUL5shYwrH-ITahY10Tw-0",
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"Subject": "An error has occurred!",
+						"ErrorMessage": "The ADF pipeline has crashed! Please check the logs.",
+						"EmailTo": "wwsql_admins@wineworks.co.nz"
+					}
+				}
+			},
+			{
+				"name": "SP Failed Email",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Merge Statement",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-24.australiasoutheast.logic.azure.com:443/workflows/d77213c4f1ec4ab89956fb3256ee6f0b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=JdvR2R2i-AADVzAwGjO9cFUL5shYwrH-ITahY10Tw-0",
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"Subject": "An error has occurred!",
+						"ErrorMessage": "The ADF pipeline has crashed! Please check the logs.",
+						"EmailTo": "wwsql_admins@wineworks.co.nz"
+					}
+				}
+			},
+			{
+				"name": "Last modifiedon",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT coalesce(MAX(CAST(SWITCHOFFSET(modifiedon, -DATEPART(TZOFFSET, modifiedon AT TIME ZONE 'New Zealand Standard Time')) AS DATETIME)),'2018-01-01') AS last_modifiedon\nFROM [Dataverse].[dbo].[ww_qcstartup];",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "wwsql003_ww_qcstartup",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": true
+				}
+			}
+		],
+		"annotations": []
+	}
+}

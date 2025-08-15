@@ -1,0 +1,41 @@
+{
+	"name": "wwsql003_Run_IOT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DataNow",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "runId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "start",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "end",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "note",
+				"type": "nvarchar"
+			},
+			{
+				"name": "machineId",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Run_IOT"
+		}
+	}
+}
