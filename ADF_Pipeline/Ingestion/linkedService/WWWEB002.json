@@ -1,0 +1,17 @@
+{
+	"name": "WWWEB002",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=True;data source=portal_data.wineworks.co.nz;initial catalog=wineworks.Database;server=portal_data.wineworks.co.nz;database=wineworks.Database;trusted_connection=True",
+			"userName": "wineworksgroup\\WWG_Service",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI1NTY0Yzg1NS0yYTRiLTQ2MWYtYWM4ZS00MjlhZjA2OTQxNGEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "ProductionLink",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

@@ -1,0 +1,912 @@
+{
+	"name": "ww_hourlylabellinglogsheet",
+	"properties": {
+		"activities": [
+			{
+				"name": "Hourly Labelling Logsheet",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Last modifiedon",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource",
+						"query": {
+							"value": "<fetch>\n  <entity name=\"ww_hourlylabellinglogsheet\">\n    <all-attributes />\n    <filter>\n      <condition attribute=\"modifiedon\" operator=\"gt\" value=\"@{activity('Last modifiedon').output.firstRow.last_modifiedon}\" />\n    </filter>\n  </entity>\n</fetch>\n",
+							"type": "Expression"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"ww_hourlylabellinglogsheetid"
+							]
+						},
+						"sqlWriterUseTableLock": true
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "createdon",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "createdon",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "modifiedon",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "modifiedon",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "statuscode",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "statuscode",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_acceptablefinish",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_acceptablefinish",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_alchoholna",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_alchoholna",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_backlabelheight",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_backlabelheight",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_backlabelleanlessthan1mmltor",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_backlabelleanlessthan1mmltor",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_backlabellotcodeinkjet",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_backlabellotcodeinkjet",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_backlabellotcodeinkjetcodesampletaken",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_backlabellotcodeinkjetcodesampletaken",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_backlabellotcodeinkjethourlycodecheck",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_backlabellotcodeinkjethourlycodecheck",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_barcodecheckdigit",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_barcodecheckdigit",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_operatorcode",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_operatorcode",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_barcodena",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_barcodena",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_billofmaterials",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "ww_billofmaterials",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_bloweron",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_bloweron",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_bottleandcapscleansig",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_bottleandcapscleansig",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_caronvarietyvintage",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_caronvarietyvintage",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cartonalcoholpercentage",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_cartonalcoholpercentage",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cartonbarcode",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_cartonbarcode",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cartonclosurelessthan10mm",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_cartonclosurelessthan10mm",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cartoncode",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_cartoncode",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cartoncountry",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_cartoncountry",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cartoneanplacementsig",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_cartoneanplacementsig",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cartonfibretear",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_cartonfibretear",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cartoninkjetcorrectcode",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_cartoninkjetcorrectcode",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cartonlabel",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_cartonlabel",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cartonlabelsig",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_cartonlabelsig",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cartonlotcode",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_cartonlotcode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cartonoperatorcode",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_cartonoperatorcode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cartonrunnumber",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_cartonrunnumber",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cartonskewlessthan10mm",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_cartonskewlessthan10mm",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cartonssig",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_cartonssig",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cartonweightrange",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_cartonweightrange",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_checkweighersetpoint",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_checkweighersetpoint",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_closuresacceptablefinishsig",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_closuresacceptablefinishsig",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_comments",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_comments",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_correctcolourprint",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_correctcolourprint",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_countofsamplestaken",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_countofsamplestaken",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_deleteline",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_deleteline",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_dividersils",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_dividersils",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_dividerused",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_dividerused",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_edgeadhesiontestpass",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_edgeadhesiontestpass",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_fourthlabelheightposition",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_fourthlabelheightposition",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_hourlylabellinglogsheetid",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "ww_hourlylabellinglogsheetid",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_key",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_labelalcoholfrontbackcheckedsig",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_labelalcoholfrontbackcheckedsig",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_labelbarcodecheckdigit",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_labelbarcodecheckdigit",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_labeldamageruborpick",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_labeldamageruborpick",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_labeldetectionon",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_labeldetectionon",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_labelfrontheight",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_labelfrontheight",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_labelleanlessthan1mmltor",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_labelleanlessthan1mmltor",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_labelnationalityfrontbackcorrectsig",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_labelnationalityfrontbackcorrectsig",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_labelssig",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_labelssig",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_lasercode",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_lasercode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_labelvarietyvintagecheckedsig",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_labelvarietyvintagecheckedsig",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_lasercodeclearandlegiblesig",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_lasercodeclearandlegiblesig",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_palletnumber",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_palletnumber",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_palletoperatorcode",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_palletoperatorcode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_palletstackingpattern",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_palletstackingpattern",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_palletstackingpatternmatchessig",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_palletstackingpatternmatchessig",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_palletsticker",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_palletsticker",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_palletstidysig",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_palletstidysig",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_pallettypesig",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_pallettypesig",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_productionline",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_productionline",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_reasonfordeletion",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_reasonfordeletion",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_rdlabel",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_rdlabel",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_sidegaplessthat4mm",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_sidegaplessthat4mm",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_sidegap1",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_sidegap1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_sidegap2",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_sidegap2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_slipsheetscorrectplacement",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_slipsheetscorrectplacement",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_thirdlabelheightposition",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_thirdlabelheightposition",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_thlabel",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_thlabel",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_wrinklesflutesbubblesorcreases",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_wrinklesflutesbubblesorcreases",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "HourlyLabellingLogsheet",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "wwsql003_ww_hourlylabellinglogsheet",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Merge Statement",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Hourly Labelling Logsheet",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[usp_ww_hourlylabellinglogsheet]"
+				},
+				"linkedServiceName": {
+					"referenceName": "WWSQL003",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "SP Fail Email",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Merge Statement",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-24.australiasoutheast.logic.azure.com:443/workflows/d77213c4f1ec4ab89956fb3256ee6f0b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=JdvR2R2i-AADVzAwGjO9cFUL5shYwrH-ITahY10Tw-0",
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"Subject": "An error has occurred!",
+						"ErrorMessage": "The ADF pipeline has crashed! Please check the logs.",
+						"EmailTo": "WWSQL_Admins@wineworks.co.nz"
+					}
+				}
+			},
+			{
+				"name": "Email on Failure BOM",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Hourly Labelling Logsheet",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-24.australiasoutheast.logic.azure.com:443/workflows/d77213c4f1ec4ab89956fb3256ee6f0b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=JdvR2R2i-AADVzAwGjO9cFUL5shYwrH-ITahY10Tw-0",
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"Subject": "An error has occurred!",
+						"ErrorMessage": "The ADF pipeline has crashed! Please check the logs.",
+						"EmailTo": "WWSQL_Admins@wineworks.co.nz"
+					}
+				}
+			},
+			{
+				"name": "Last modifiedon",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT coalesce(MAX(CAST(SWITCHOFFSET(modifiedon, -DATEPART(TZOFFSET, modifiedon AT TIME ZONE 'New Zealand Standard Time')) AS DATETIME)),'2018-01-01') AS last_modifiedon\nFROM [Dataverse].[dbo].[ww_hourlylabellinglogsheet];",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "wwsql003_ww_hourlylabellinglogsheet",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": true
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-04-13T20:25:07Z"
+	}
+}

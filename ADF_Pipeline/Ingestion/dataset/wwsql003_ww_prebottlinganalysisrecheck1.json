@@ -1,0 +1,206 @@
+{
+	"name": "wwsql003_ww_prebottlinganalysisrecheck1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "crc5d_fiapprovedby",
+				"type": "nvarchar"
+			},
+			{
+				"name": "crc5d_fichange",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "crc5d_refract",
+				"type": "bit"
+			},
+			{
+				"name": "crc5d_refractvalue",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "createdon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "statuscode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_alc",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_alcnum",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_alcoholbydistil",
+				"type": "bit"
+			},
+			{
+				"name": "ww_basedo",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_co2",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_customertankname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ww_deleteline",
+				"type": "bit"
+			},
+			{
+				"name": "ww_density",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_distill",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_distillnum",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_etxt",
+				"type": "bit"
+			},
+			{
+				"name": "ww_extraanalysis",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_fi",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_fiissueemailsent",
+				"type": "bit"
+			},
+			{
+				"name": "ww_fso2",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_initials",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_operator",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_operatorcode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_pbatankerlookup",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_ph",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_prebottlinganalysisrecheckid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_productionline",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_run",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_tanker",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_tankerlookup",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_tankerlookuptext",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_temp",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_tso2",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_tso2mg",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_tso2num",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ww_prebottlinganalysisrecheck"
+		}
+	}
+}

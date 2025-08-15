@@ -1,0 +1,21 @@
+{
+	"name": "EskerWWFTP",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "EskerFTPWW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

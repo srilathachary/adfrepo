@@ -1,0 +1,15 @@
+{
+	"name": "Databricks_LinkedService_Integration",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Databricks_LinkedService_Integration",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"catalog": "iotprod"
+			}
+		},
+		"annotations": [],
+		"type": "AzureDatabricksDeltaLakeDataset",
+		"schema": []
+	}
+}

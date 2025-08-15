@@ -1,0 +1,16 @@
+{
+	"name": "WWSCALE002_Print_Logs",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSCALE002",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation"
+			}
+		}
+	}
+}

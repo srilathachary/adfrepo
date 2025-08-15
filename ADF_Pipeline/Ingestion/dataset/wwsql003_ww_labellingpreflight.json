@@ -1,0 +1,332 @@
+{
+	"name": "wwsql003_ww_labellingpreflight",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "createdon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "statuscode",
+				"type": "bit"
+			},
+			{
+				"name": "crc5d_lasercodecheck",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_backlabel",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_backlabeladditionaltext",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_backlabelinkjetcode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_backlabelinkjetplacement",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_billofmaterials",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_billofmaterialsinstructionsforthisrun",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_billofmaterialsspecificinstructions",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bom3rdlabel",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bom3rdlabelposition",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bom4thlabel",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bom4thlabelposition",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bombacklabel",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bombacklabelheight",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bombacklabelinkjetcode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bomcartoncode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bomcartoninkjet",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bomcartoninkjetplacement",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bomcartonlabelinstruction",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bomcartonlabeltype",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bomextraitem",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bomextraitem2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bomfrontlabel",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bomfrontlabelheight",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bomgenericinstruction",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bominstructionsforthisrun",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bomlabeladditionaltext",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bomlabelinkjetplacement",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bompalletstackingpattern",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bomslipsheet",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bomspecificinstructions",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bomworkorderinstructions",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cartonilscode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cartoninkjet",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cartoninkjetplacement",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cartonlabels",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cartons",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_caseerectoroverpackerscissorscheck",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_caselabellerscissorscheck",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_closuresilscodecorrectsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_divider",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_dividersilscode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_dividersscissorscheck",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_dividerused",
+				"type": "bit"
+			},
+			{
+				"name": "ww_extraitem",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_extraitem2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_fourthlabel",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_frontlabel",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_genericclientinstructions",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_labeldetectionon",
+				"type": "bit"
+			},
+			{
+				"name": "ww_labellerscissorscheck",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_labellingpreflightid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_labelpositionamended",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_lasercodeonbottle",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_lineclearfrompreviousjob",
+				"type": "bit"
+			},
+			{
+				"name": "ww_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_operatorcode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_pallet",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_palletnumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_palletscorrecttospec",
+				"type": "bit"
+			},
+			{
+				"name": "ww_pallettypecheckedsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_productionline",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_sampleattachedtospec",
+				"type": "bit"
+			},
+			{
+				"name": "ww_slipsheet",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_stacking",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_startupinitial",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_startuptime",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ww_thirdlabel",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_uv",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_varietyvintage",
+				"type": "bit"
+			},
+			{
+				"name": "ww_weighalarmon",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_workorderinstructions",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ww_labellingpreflight"
+		}
+	}
+}

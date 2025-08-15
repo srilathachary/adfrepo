@@ -1,0 +1,10 @@
+{
+	"name": "kv_adb_iot_test",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://kv-adb-iot-test.vault.azure.net/"
+		}
+	}
+}

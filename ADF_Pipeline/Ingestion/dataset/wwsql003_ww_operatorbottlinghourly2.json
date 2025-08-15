@@ -1,0 +1,620 @@
+{
+	"name": "wwsql003_ww_operatorbottlinghourly2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "createdon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "statuscode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_authorisedsig",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_autolevelmanometer",
+				"type": "bit"
+			},
+			{
+				"name": "ww_bardifferential",
+				"type": "bit"
+			},
+			{
+				"name": "ww_billofmaterials",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_bottlecodesig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bottlecoloursig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bottlelasersticker",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_bottlelaserstickersig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bottlenumberasperlasercoder",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_bottlerubmark",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_bottleshapesig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bottlevacuum",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_bottlevacuumaccordingtorecipe",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_bottlingfrom",
+				"type": "bit"
+			},
+			{
+				"name": "ww_bottlingto",
+				"type": "bit"
+			},
+			{
+				"name": "ww_bowlmn2pressure",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_bowlvacuum",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_bucketsflowedintime",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_bucketsflowedtime",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ww_capdetectoronsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_checkdocketandphysicallycheckwineisrun",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_chippednecks",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_co2",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_collectexportsamples",
+				"type": "bit"
+			},
+			{
+				"name": "ww_corkervacuum",
+				"type": "bit"
+			},
+			{
+				"name": "ww_corkervacuum08to10bar",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_counterpressureinlet",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_counterpressureoutlet",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_deleteline",
+				"type": "bit"
+			},
+			{
+				"name": "ww_deoxn2pressre",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_deoxvacuumpressure",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_do2frombottle",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_do2fromvessel",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_exportsamplespicked",
+				"type": "bit"
+			},
+			{
+				"name": "ww_fillerbowlpressure",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_fillerbowltemperature",
+				"type": "bit"
+			},
+			{
+				"name": "ww_fillerhead",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_fillerspeed",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_fillertemperature40c",
+				"type": "bit"
+			},
+			{
+				"name": "ww_fillertipsealsvisualchecksig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_fillheight",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_fillheightdetectoronsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_filterdifferential",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_filtrationpressuregauge",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_finalfilter",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_flowmetercheck",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_foreignbodyvisualcheck",
+				"type": "bit"
+			},
+			{
+				"name": "ww_foreignmattersig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_gasblowonbottle",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_gascoveronbowl",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_gasfeedtocorker",
+				"type": "bit"
+			},
+			{
+				"name": "ww_gasfeedtocorker1030kpa",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_gasflowratetobowlline2",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_gasflowtocap",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_gaspressuretobottlingtank",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_glassfragments",
+				"type": "bit"
+			},
+			{
+				"name": "ww_glassfragmentscheck",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_glassfragmentsexplanation",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_inbottle",
+				"type": "bit"
+			},
+			{
+				"name": "ww_intank",
+				"type": "bit"
+			},
+			{
+				"name": "ww_lasercodeasperspec",
+				"type": "bit"
+			},
+			{
+				"name": "ww_lasercodeonbottle",
+				"type": "bit"
+			},
+			{
+				"name": "ww_lenticularfilter",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_litmuspapertestinproduct",
+				"type": "bit"
+			},
+			{
+				"name": "ww_n2buffervesselpressure",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_neckcheck",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_notes",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_operatorbottlinghourlyid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_operatorcode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_palletnumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_pittingsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_prefilter",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_prepcheck2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_prepcheck3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_prepchecksig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_productionline",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_pumpnumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_pumpnumberbendpanel",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_pumpspeed",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_rinseheadinspection",
+				"type": "bit"
+			},
+			{
+				"name": "ww_rinseheadmedium",
+				"type": "bit"
+			},
+			{
+				"name": "ww_rinsejetcoveragesig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_rinserbottlegripperclearancesig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_rinsergassupplyco2",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_rinsergaswatersupply",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_rinsergaswatersupplyline1",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_rinsergaswatersupplyline2",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_rinsern2pressure",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_rinserpressurefluctuations",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_rinsertipsvisualchecksig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_rinserwatersupply",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_rinsewater045mprefilter",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_rinsewater12mprefilter",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_rockstopper",
+				"type": "bit"
+			},
+			{
+				"name": "ww_rockstopperfilter",
+				"type": "bit"
+			},
+			{
+				"name": "ww_samplessig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_screencheckfordoserate",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_selflevelling",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_sparkling",
+				"type": "bit"
+			},
+			{
+				"name": "ww_stockcodesig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_tankchangeflowedintimesig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_tankjointscheckedfornleakssig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_tankpressure",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_temperature",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_timeofauthorisedauditcheck",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ww_timeofcheckmicrosampletaken",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ww_tkinjectionmanometer",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_velcorinalarmssig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_velcorinchangebottlelightsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_velcorindosingrate",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_velcorntime",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ww_venttubecount",
+				"type": "bit"
+			},
+			{
+				"name": "ww_visualfloatiescheckedsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_visualleakssig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_warmingtunnelrunningtemperature",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_winetemperatureinternalprobe40c",
+				"type": "bit"
+			},
+			{
+				"name": "ww_winetempinternalprobe",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_xraychallengetest",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ww_operatorbottlinghourly"
+		}
+	}
+}

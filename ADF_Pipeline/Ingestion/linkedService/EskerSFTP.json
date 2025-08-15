@@ -1,0 +1,16 @@
+{
+	"name": "EskerSFTP",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "Sftp",
+		"typeProperties": {
+			"host": "sftp-ae5.ondemand.esker.com",
+			"port": 22,
+			"skipHostKeyValidation": true,
+			"authenticationType": "Basic",
+			"userName": "Invoices@05284907.20003690",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDY4RjQ2RjFELUFFRDItNDBDNS1CNERFLUQ1MzBBRjVGQTAyQ19mODMwZWUzYi1iODM3LTRjYTYtYTZhOS04N2ZlMDM3NmM0YTciDQp9"
+		}
+	}
+}

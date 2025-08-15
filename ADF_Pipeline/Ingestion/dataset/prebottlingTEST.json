@@ -1,0 +1,16 @@
+{
+	"name": "prebottlingTEST",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ww_prebottlinganalysis"
+		}
+	}
+}
