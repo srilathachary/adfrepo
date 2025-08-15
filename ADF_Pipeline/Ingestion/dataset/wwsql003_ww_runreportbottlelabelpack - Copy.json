@@ -1,0 +1,197 @@
+{
+	"name": "wwsql003_ww_runreportbottlelabelpack",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "createdon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "statuscode",
+				"type": "bit"
+			},
+			{
+				"name": "crc5d_runcompleted",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_billofmaterials",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_bomcompleted",
+				"type": "bit"
+			},
+			{
+				"name": "ww_cases1",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_cases2",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_cases3",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_cases4",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_cases5",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_casestotal1",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_casestotal2",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_casestotal3",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_casestotal4",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_casestotal5",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_internalnotes",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_operatorcode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_palletsbins1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_palletsbins2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_palletsbins3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_palletsbins4",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_palletsbins5",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_palletsbinseachcontaining2",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_palletsbinseachcontaining3",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_palletsbinseachcontaining4",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_palletsbinseachcontaining5",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_pendingupdate",
+				"type": "bit"
+			},
+			{
+				"name": "ww_pluscasesdispatchedoffline",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_productionline",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_productionnotes",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_runreportbottlelabelpackid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_runreportsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_totalcasesproduced",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_totalcasestowarehouse",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ww_runreportbottlelabelpack"
+		}
+	}
+}

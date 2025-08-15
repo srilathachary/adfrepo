@@ -1,0 +1,142 @@
+{
+	"name": "wwsql003_ww_run",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "createdon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "statuscode",
+				"type": "bit"
+			},
+			{
+				"name": "ww_clientcode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_clientname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_clientworkorderreference",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_completed",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_lastcopied",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ww_microsneeded",
+				"type": "bit"
+			},
+			{
+				"name": "ww_newupdate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ww_pendingupdate",
+				"type": "bit"
+			},
+			{
+				"name": "ww_productid",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_rundate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ww_runid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_runnumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_runproductionline",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_stocktoconsumecasevariability",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_stocktoconsumerun",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_stocktoconsumestockcode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_stocktoconsumestockcodedescription",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_variety",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_velcorinrate",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_vintage",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_vintagevariety",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_winehandling",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_workorderid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_workordertype",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_workorderupdatedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ww_run"
+		}
+	}
+}

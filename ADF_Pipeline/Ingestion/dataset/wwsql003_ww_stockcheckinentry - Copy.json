@@ -1,0 +1,90 @@
+{
+	"name": "wwsql003_ww_stockcheckinentry",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "createdon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "statuscode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_billofmaterials",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_deleteline",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_itemcode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_lpn",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_operatorcode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_productionline",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_quantity",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_quantitydecimal",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_run",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_stockcheckinentryid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_timeloaded",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ww_stockcheckinentry"
+		}
+	}
+}

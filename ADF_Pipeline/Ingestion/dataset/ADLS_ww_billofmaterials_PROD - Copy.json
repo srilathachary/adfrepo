@@ -1,0 +1,20 @@
+{
+	"name": "ADLS_ww_billofmaterials_PROD",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dlsadbiotprod",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "iotprod/bronze/dataverse/ww_billofmaterials/landing",
+				"fileSystem": "dls-fs-iot"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
