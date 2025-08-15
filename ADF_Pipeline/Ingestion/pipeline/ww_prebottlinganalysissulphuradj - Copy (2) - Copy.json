@@ -1,0 +1,461 @@
+{
+	"name": "ww_prebottlinganalysissulphuradj",
+	"properties": {
+		"activities": [
+			{
+				"name": "Pre-Bottling Analysis Sulphur Adjustment",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Last modifiedon",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource",
+						"query": {
+							"value": "<fetch>\n  <entity name=\"ww_prebottlinganalysissulphuradj\">\n    <all-attributes />\n    <filter>\n      <condition attribute=\"modifiedon\" operator=\"gt\" value=\"@{activity('Last modifiedon').output.firstRow.last_modifiedon}\" />\n    </filter>\n  </entity>\n</fetch>\n",
+							"type": "Expression"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"ww_prebottlinganalysissulphuradjid"
+							]
+						},
+						"sqlWriterUseTableLock": true
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "createdon",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "createdon",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "modifiedon",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "modifiedon",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "statuscode",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "statuscode",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_customertankname",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_customertankname",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_date",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ww_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_deleteline",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_DeleteLine",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_etxt",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_etxt",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_initial1",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_initial1",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_initial2",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_initial2",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_operator",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_operator",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_operatorcode",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_operatorcode",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_pbasulphuradjustmentsname",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_pbasulphuradjustmentsname",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_pmsbatchexpirydate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ww_pmsbatchexpirydate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_pmsg",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_pmsg",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_pms_batch",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_pms_batch",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_prebottlinganalysissulphuradjid",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "ww_prebottlinganalysissulphuradjid",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_productionline",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_productionline",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_reasonfordeletion",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_reasonfordeletion",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_requiredso2result",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_requiredso2result",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_retestresult",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_retestresult",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_run",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "ww_run",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_so2increasesppm",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_so2increasesppm",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_spargetime",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_spargetime",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_tanker",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_tanker",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_tankerlookup",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "ww_tankerlookup",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_tankerlookuptext",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_tankerlookuptext",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_totalsulphurresult",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_totalsulphurresult",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_winevolume",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_winevolume",
+									"type": "Decimal"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PrebottlingAnalysisSulphurAdjustments",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "WWSQL003_PrebottlingAnalysisSulphurAdjustments",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Merge Statement",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Pre-Bottling Analysis Sulphur Adjustment",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "usp_ww_prebottlinganalysissulphuradj"
+				},
+				"linkedServiceName": {
+					"referenceName": "WWSQL003",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "SP Fail Email",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Merge Statement",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-24.australiasoutheast.logic.azure.com:443/workflows/d77213c4f1ec4ab89956fb3256ee6f0b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=JdvR2R2i-AADVzAwGjO9cFUL5shYwrH-ITahY10Tw-0",
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"Subject": "An error has occurred!",
+						"ErrorMessage": "The ADF pipeline has crashed! Please check the logs.",
+						"EmailTo": "WWSQL_Admins@wineworks.co.nz"
+					}
+				}
+			},
+			{
+				"name": "Email on Failure",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Pre-Bottling Analysis Sulphur Adjustment",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-24.australiasoutheast.logic.azure.com:443/workflows/d77213c4f1ec4ab89956fb3256ee6f0b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=JdvR2R2i-AADVzAwGjO9cFUL5shYwrH-ITahY10Tw-0",
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"Subject": "An error has occurred!",
+						"ErrorMessage": "The ADF pipeline has crashed! Please check the logs.",
+						"EmailTo": "WWSQL_Admins@wineworks.co.nz"
+					}
+				}
+			},
+			{
+				"name": "Last modifiedon",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT coalesce(MAX(CAST(SWITCHOFFSET(modifiedon, -DATEPART(TZOFFSET, modifiedon AT TIME ZONE 'New Zealand Standard Time')) AS DATETIME)),'2018-01-01') AS last_modifiedon\nFROM [Dataverse].[dbo].[ww_prebottlinganalysissulphuradj];",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "WWSQL003_PrebottlingAnalysisSulphurAdjustments",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": true
+				}
+			}
+		],
+		"annotations": []
+	}
+}

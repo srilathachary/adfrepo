@@ -1,0 +1,491 @@
+{
+	"name": "ww_qcendofrun",
+	"properties": {
+		"activities": [
+			{
+				"name": "QC End of Run",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Last modifiedon",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource",
+						"query": {
+							"value": "<fetch>\n  <entity name=\"ww_qcendofrun\">\n    <all-attributes />\n    <filter>\n      <condition attribute=\"modifiedon\" operator=\"gt\" value=\"@{activity('Last modifiedon').output.firstRow.last_modifiedon}\" />\n    </filter>\n  </entity>\n</fetch>\n",
+							"type": "Expression"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"ww_qcendofrunid"
+							]
+						},
+						"sqlWriterUseTableLock": true
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "createdon",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "createdon",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "modifiedon",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "modifiedon",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "statuscode",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "statuscode",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_bottlecounter",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_bottlecounter",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_bottlingfromtextlookup",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_BottlingFromtextlookup",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_bottlingto",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_BottlingTo",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_checktime",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ww_CheckTime",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_comments",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_Comments",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_dco2",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_dco2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_do2",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_do2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_endofrunsamples",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_endofrunsamples",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_finalbottlecount",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_FinalBottleCount",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_endofsamples",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_endofsamples",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_flowmeter",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_flowmeter",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_flowmetercheck",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_Flowmetercheck",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_glassfragmentscheck",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_GlassFragmenstCheck",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_inbottle",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "Ww_Inbottle",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_lasercounter",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_lasercounter",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_magnumwhitetape",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_magnumwhitetape",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_operatorcode",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_operatorcode",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_productionline",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_productionline",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_qcendofrunid",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "ww_qcendofrunid",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_qcendofrunname",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_qcendofrunname",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_qcstartup",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "ww_qcstartup",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_rejectcounter",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_rejectcounter",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_rinseheadmedium",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_Rinseheadmedium",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_rinsergassupplyccp1",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_RinserGasSupplyCCP1",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_run",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "ww_run",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_runendtime",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ww_runendtime",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_velcorinproductionmodeoff",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_VelcorinProductionmodeoff",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_velcorinsystemdrained",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_VelcorinSystemdrained",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "QCEndofRun",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "wwsql003_ww_qcendofrun",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Merge Statement",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "QC End of Run",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[usp_ww_qcendofrun]"
+				},
+				"linkedServiceName": {
+					"referenceName": "WWSQL003",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Data Copy fail email",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "QC End of Run",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-24.australiasoutheast.logic.azure.com:443/workflows/d77213c4f1ec4ab89956fb3256ee6f0b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=JdvR2R2i-AADVzAwGjO9cFUL5shYwrH-ITahY10Tw-0",
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"Subject": "An error has occurred!",
+						"ErrorMessage": "The ADF pipeline has crashed! Please check the logs.",
+						"EmailTo": "wwsql_admins@wineworks.co.nz"
+					}
+				}
+			},
+			{
+				"name": "SP Failed Email",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Merge Statement",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-24.australiasoutheast.logic.azure.com:443/workflows/d77213c4f1ec4ab89956fb3256ee6f0b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=JdvR2R2i-AADVzAwGjO9cFUL5shYwrH-ITahY10Tw-0",
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"Subject": "An error has occurred!",
+						"ErrorMessage": "The ADF pipeline has crashed! Please check the logs.",
+						"EmailTo": "wwsql_admins@wineworks.co.nz"
+					}
+				}
+			},
+			{
+				"name": "Last modifiedon",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT coalesce(MAX(CAST(SWITCHOFFSET(modifiedon, -DATEPART(TZOFFSET, modifiedon AT TIME ZONE 'New Zealand Standard Time')) AS DATETIME)),'2018-01-01') AS last_modifiedon\nFROM [Dataverse].[dbo].[ww_qcendofrun];\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "wwsql003_ww_qcendofrun",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": true
+				}
+			}
+		],
+		"annotations": []
+	}
+}

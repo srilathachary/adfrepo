@@ -1,0 +1,186 @@
+{
+	"name": "PROD Databricks Downtimes",
+	"properties": {
+		"activities": [
+			{
+				"name": "IsNewData",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource",
+						"query": {
+							"value": "@concat('<fetch><entity name=\"crc5d_newtable\"><all-attributes/><filter type=\"and\"><condition attribute=\"modifiedon\" operator=\"ge\" value=\"',pipeline().parameters.triggerStart,'\"/><condition attribute=\"modifiedon\" operator=\"le\" value=\"',pipeline().parameters.triggerEnd,'\"/></filter></entity></fetch>')",
+							"type": "Expression"
+						}
+					},
+					"dataset": {
+						"referenceName": "DowntimesProd",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "If Condition Downtimes",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "IsNewData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@contains(activity('IsNewData').output, 'firstRow')",
+						"type": "Expression"
+					},
+					"ifTrueActivities": [
+						{
+							"name": "Downtimes_copy1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "CommonDataServiceForAppsSource",
+									"query": {
+										"value": "@concat('<fetch><entity name=\"crc5d_newtable\"><all-attributes/><filter type=\"and\"><condition attribute=\"modifiedon\" operator=\"ge\" value=\"',pipeline().parameters.triggerStart,'\"/><condition attribute=\"modifiedon\" operator=\"le\" value=\"',pipeline().parameters.triggerEnd,'\"/></filter></entity></fetch>')",
+										"type": "Expression"
+									}
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "ParquetWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "DowntimesProd",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ADLS_DowntimePROD",
+									"type": "DatasetReference"
+								}
+							]
+						},
+						{
+							"name": "bronze-silver-gold_copy1",
+							"type": "DatabricksNotebook",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
+							"dependsOn": [
+								{
+									"activity": "Downtimes_copy1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 2,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Repos/databricks-sp-iot-prod/adb-iot/ETL/azure-data-factory/dataverse-bronze-silver-gold",
+								"baseParameters": {
+									"DROP_DATAVERSE_DEFAULTS": {
+										"value": "@pipeline().parameters.dropDataverseDefaults",
+										"type": "Expression"
+									},
+									"MODIFIEDON_COLUMN": {
+										"value": "@pipeline().parameters.modifiedonColumn",
+										"type": "Expression"
+									},
+									"PARTITION_COLUMN": {
+										"value": "@pipeline().parameters.partitionColumn",
+										"type": "Expression"
+									},
+									"TABLE_NAME": {
+										"value": "@pipeline().parameters.tableName",
+										"type": "Expression"
+									},
+									"SECONDARY_PARTITION": {
+										"value": "@pipeline().parameters.partitionBySecondary",
+										"type": "Expression"
+									},
+									"SECONDARY_PARTITION_NAME": {
+										"value": "@pipeline().parameters.secondaryPartitionColumnName",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "adb_iot_prod",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"triggerStart": {
+				"type": "string"
+			},
+			"triggerEnd": {
+				"type": "string"
+			},
+			"modifiedonColumn": {
+				"type": "string",
+				"defaultValue": "modifiedon"
+			},
+			"partitionColumn": {
+				"type": "string",
+				"defaultValue": "crc5d_newtableid"
+			},
+			"tableName": {
+				"type": "string",
+				"defaultValue": "crc5d_newtable"
+			},
+			"partitionBySecondary": {
+				"type": "string",
+				"defaultValue": "false"
+			},
+			"secondaryPartitionColumnName": {
+				"type": "string",
+				"defaultValue": "false"
+			},
+			"dropDataverseDefaults": {
+				"type": "string",
+				"defaultValue": "false"
+			}
+		},
+		"annotations": []
+	}
+}

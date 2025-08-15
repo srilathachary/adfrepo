@@ -1,0 +1,461 @@
+{
+	"name": "ww_run",
+	"properties": {
+		"activities": [
+			{
+				"name": "Run",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Last modifiedon",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource",
+						"query": {
+							"value": "<fetch>\n  <entity name=\"ww_run\">\n    <all-attributes />\n    <filter>\n      <condition attribute=\"modifiedon\" operator=\"gt\" value=\"@{activity('Last modifiedon').output.firstRow.last_modifiedon}\" />\n    </filter>\n  </entity>\n</fetch>\n",
+							"type": "Expression"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"ww_runid"
+							]
+						},
+						"sqlWriterUseTableLock": true
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "createdon",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "createdon",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "modifiedon",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "modifiedon",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "statuscode",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "statuscode",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_clientcode",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_clientcode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_clientname",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_clientname",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_clientworkorderreference",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_clientworkorderreference",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_completed",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_completed",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_lastcopied",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ww_lastcopied",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_microsneeded",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_microsneeded",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_newupdate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ww_newupdate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_pendingupdate",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_pendingupdate",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_productid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_productid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_rundate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ww_rundate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_runid",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "ww_runid",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_runnumber",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_runnumber",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_runproductionline",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "ww_runproductionline",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_stocktoconsumecasevariability",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_stocktoconsumecasevariability",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_stocktoconsumerun",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_stocktoconsumerun",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_stocktoconsumestockcode",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_stocktoconsumestockcode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_stocktoconsumestockcodedescription",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_stocktoconsumestockcodedescription",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_variety",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_variety",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_velcorinrate",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_velcorinrate",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_vintage",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_vintage",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_vintagevariety",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_vintagevariety",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_winehandling",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_winehandling",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_workorderid",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_workorderid",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_workordertype",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_workordertype",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_workorderupdatedon",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ww_workorderupdatedon",
+									"type": "DateTime"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Run",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "wwsql003_ww_run",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Merge Statement",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Run",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[usp_ww_run]"
+				},
+				"linkedServiceName": {
+					"referenceName": "WWSQL003",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "SP Fail Email",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Merge Statement",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-24.australiasoutheast.logic.azure.com:443/workflows/d77213c4f1ec4ab89956fb3256ee6f0b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=JdvR2R2i-AADVzAwGjO9cFUL5shYwrH-ITahY10Tw-0",
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"Subject": "An error has occurred!",
+						"ErrorMessage": "The ADF pipeline has crashed! Please check the logs.",
+						"EmailTo": "wwsql_admins@wineworks.co.nz"
+					}
+				}
+			},
+			{
+				"name": "Email on Failure BOM",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Run",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-24.australiasoutheast.logic.azure.com:443/workflows/d77213c4f1ec4ab89956fb3256ee6f0b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=JdvR2R2i-AADVzAwGjO9cFUL5shYwrH-ITahY10Tw-0",
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"Subject": "An error has occurred!",
+						"ErrorMessage": "The ADF pipeline has crashed! Please check the logs.",
+						"EmailTo": "wwsql_admins@wineworks.co.nz"
+					}
+				}
+			},
+			{
+				"name": "Last modifiedon",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT coalesce(MAX(CAST(SWITCHOFFSET(modifiedon, -DATEPART(TZOFFSET, modifiedon AT TIME ZONE 'New Zealand Standard Time')) AS DATETIME)),'2018-01-01') AS last_modifiedon\nFROM [Dataverse].[dbo].[ww_run];",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "wwsql003_ww_run",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": true
+				}
+			}
+		],
+		"annotations": []
+	}
+}

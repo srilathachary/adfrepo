@@ -1,0 +1,613 @@
+{
+	"name": "ww_prebottlinganalysissignoff",
+	"properties": {
+		"activities": [
+			{
+				"name": "PrebottlingAnalysisSignOff",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Last modifiedon",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource",
+						"query": {
+							"value": "<fetch>\n  <entity name=\"ww_prebottlinganalysissignoff\">\n    <all-attributes />\n    <filter>\n      <condition attribute=\"modifiedon\" operator=\"gt\" value=\"@{activity('Last modifiedon').output.firstRow.last_modifiedon}\" />\n    </filter>\n  </entity>\n</fetch>\n",
+							"type": "Expression"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "crc5d_additionalchargesinformation",
+									"type": "String"
+								},
+								"sink": {
+									"name": "crc5d_additionalchargesinformation",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "crc5d_chargingcomplete",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "crc5d_chargingcomplete",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "createdon",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "createdon",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "modifiedon",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "modifiedon",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "statuscode",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "statuscode",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_additionaltransferszlatrad",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_additionaltransferszlatrad",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_alcoholrecheckzlaaa",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_alcoholrecheckzlaaa",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_authorisation",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_authorisation",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_authorisingsignature",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_authorisingsignature",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_bottleavailableat",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ww_bottleavailableat",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cellarstafftime",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_cellarstafftime",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_cellarstafftimezrsollc",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ww_cellarstafftimezrsollc",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_co2saturationandtolerance",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_co2saturationandtolerance",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_co2dorecheckzlagas",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_co2dorecheckzlagas",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_eststarttime",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ww_eststarttime",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_etxt",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_etxt",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_fiissueemailsent",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_fiissueemailsent",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_filterabilitycasechargezpfsc",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_filterabilitycasechargezpfsc",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_filterabilitycasechargezpfsc2",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_filterabilitycasechargezpfsc2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_filterabilityretestzlafi",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_filterabilityretestzlafi",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_goodtogo",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_goodtogo",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_instructionfromwinemaker",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_instructionfromwinemaker",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_operator",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_operator",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_operatorcode",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_operatorcode",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_pmsaddition",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_pmsaddition",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_prebottlinganalysissignoffid",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "ww_prebottlinganalysissignoffid",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_productionline",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_productionline",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_run",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "ww_run",
+									"type": "Guid"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_signoff",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_signoff",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_so2recheckfreeftzlaso2",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_so2recheckfreeftzlaso2",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_soetxt",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_soetxt",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_sogoodtogo",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_sogoodtogo",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_sowinemakertobepresentfortaste",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_sowinemakertobepresentfortaste",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_spargeinlinezpssp",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_spargeinlinezpssp",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_sparkling",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ww_sparkling",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_startupalcoholpass",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_startupalcoholpass",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_startupalcoholreading",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ww_startupalcoholreading",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_tanktransferzlatran",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_tanktransferzlatran",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_tempadjustmentzpcwt",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_tempadjustmentzpcwt",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_winemaker",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_winemaker",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_winemakerinstructions",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_winemakerinstructions",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_winemakertobepresentfortaste",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_winemakertobepresentfortaste",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_winemakertobepresentfortasteoff",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ww_winemakertobepresentfortasteoff",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ww_wwsupplieddryicezpsdi",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ww_wwsupplieddryicezpsdi",
+									"type": "Int32"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PrebottlingAnalysisSignOff",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "wwsql003_ww_prebottlinganalysissignoff12",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Merge Statement",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "PrebottlingAnalysisSignOff",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[usp_ww_prebottlinganalysissignoff]"
+				},
+				"linkedServiceName": {
+					"referenceName": "WWSQL003",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "SP Fail Email",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Merge Statement",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-24.australiasoutheast.logic.azure.com:443/workflows/d77213c4f1ec4ab89956fb3256ee6f0b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=JdvR2R2i-AADVzAwGjO9cFUL5shYwrH-ITahY10Tw-0",
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"Subject": "An error has occurred!",
+						"ErrorMessage": "The ADF pipeline has crashed! Please check the logs.",
+						"EmailTo": "WWSQL_Admins@wineworks.co.nz"
+					}
+				}
+			},
+			{
+				"name": "Email on Failure BOM",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "PrebottlingAnalysisSignOff",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-24.australiasoutheast.logic.azure.com:443/workflows/d77213c4f1ec4ab89956fb3256ee6f0b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=JdvR2R2i-AADVzAwGjO9cFUL5shYwrH-ITahY10Tw-0",
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"Subject": "An error has occurred!",
+						"ErrorMessage": "The ADF pipeline has crashed! Please check the logs.",
+						"EmailTo": "WWSQL_Admins@wineworks.co.nz"
+					}
+				}
+			},
+			{
+				"name": "Last modifiedon",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT coalesce(MAX(CAST(SWITCHOFFSET(modifiedon, -DATEPART(TZOFFSET, modifiedon AT TIME ZONE 'New Zealand Standard Time')) AS DATETIME)),'2018-01-01') AS last_modifiedon\nFROM [Dataverse].[dbo].[ww_prebottlinganalysissignoff];",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "wwsql003_ww_prebottlinganalysissignoff12",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": true
+				}
+			}
+		],
+		"annotations": []
+	}
+}
