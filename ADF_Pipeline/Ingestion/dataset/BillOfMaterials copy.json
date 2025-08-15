@@ -1,0 +1,19 @@
+{
+	"name": "BillOfMaterials",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLToDataverseProd",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Bill Of Material"
+		},
+		"annotations": [],
+		"type": "CommonDataServiceForAppsEntity",
+		"schema": [],
+		"typeProperties": {
+			"entityName": "ww_billofmaterials"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

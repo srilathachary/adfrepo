@@ -1,0 +1,20 @@
+{
+	"name": "ADLS_IOT_TEST_ww_billofmaterials",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dlsadbiottest",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "iottest/bronze/dataverse/ww_billofmaterials/landing",
+				"fileSystem": "dls-fs-iot"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
