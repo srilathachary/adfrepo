@@ -1,0 +1,17 @@
+{
+	"name": "WWWEB0021",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dataverse",
+			"table": "vwBom"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,270 @@
+{
+	"name": "wwsql003_ww_hourlylabellinglogsheet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "createdon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "statuscode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_alchoholna",
+				"type": "bit"
+			},
+			{
+				"name": "ww_backlabelheight",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_backlabelleanlessthan1mmltor",
+				"type": "bit"
+			},
+			{
+				"name": "ww_backlabellotcodeinkjet",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_backlabellotcodeinkjetcodesampletaken",
+				"type": "bit"
+			},
+			{
+				"name": "ww_backlabellotcodeinkjethourlycodecheck",
+				"type": "bit"
+			},
+			{
+				"name": "ww_barcodecheckdigit",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_barcodena",
+				"type": "bit"
+			},
+			{
+				"name": "ww_billofmaterials",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_bottleandcapscleansig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_caronvarietyvintage",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cartonalcoholpercentage",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_cartonbarcode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_cartonclosurelessthan10mm",
+				"type": "bit"
+			},
+			{
+				"name": "ww_cartoncountry",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cartoneanplacementsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cartonfibretear",
+				"type": "bit"
+			},
+			{
+				"name": "ww_cartoninkjetcorrectcode",
+				"type": "bit"
+			},
+			{
+				"name": "ww_cartonlabel",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cartonlabelsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cartonlotcode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cartonrunnumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cartonskewlessthan10mm",
+				"type": "bit"
+			},
+			{
+				"name": "ww_cartonssig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cartonweightrange",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_checkweighersetpoint",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_closuresacceptablefinishsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_deleteline",
+				"type": "bit"
+			},
+			{
+				"name": "ww_dividersils",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_dividerused",
+				"type": "bit"
+			},
+			{
+				"name": "ww_edgeadhesiontestpass",
+				"type": "bit"
+			},
+			{
+				"name": "ww_fourthlabelheightposition",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_hourlylabellinglogsheetid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_key",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_labelalcoholfrontbackcheckedsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_labelbarcodecheckdigit",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_labeldamageruborpick",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_labelfrontheight",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_labelleanlessthan1mmltor",
+				"type": "bit"
+			},
+			{
+				"name": "ww_labelnationalityfrontbackcorrectsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_labelssig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_labelvarietyvintagecheckedsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_lasercodeclearandlegiblesig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_palletnumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_palletstackingpattern",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_palletstackingpatternmatchessig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_palletsticker",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_palletstidysig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_pallettypesig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_productionline",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_rdlabel",
+				"type": "bit"
+			},
+			{
+				"name": "ww_sidegaplessthat4mm",
+				"type": "bit"
+			},
+			{
+				"name": "ww_slipsheetscorrectplacement",
+				"type": "bit"
+			},
+			{
+				"name": "ww_thirdlabelheightposition",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_thlabel",
+				"type": "bit"
+			},
+			{
+				"name": "ww_wrinklesflutesbubblesorcreases",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ww_hourlylabellinglogsheet"
+		}
+	}
+}

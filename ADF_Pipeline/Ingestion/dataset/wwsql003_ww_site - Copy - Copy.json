@@ -1,0 +1,54 @@
+{
+	"name": "wwsql003_ww_site",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "createdon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "statuscode",
+				"type": "bit"
+			},
+			{
+				"name": "ww_siteid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_siteidlookup",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_sitename",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_siterunnumberprefix",
+				"type": "varchar"
+			},
+			{
+				"name": "ww_wwsitecode",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ww_site"
+		}
+	}
+}

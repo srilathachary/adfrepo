@@ -1,0 +1,237 @@
+{
+	"name": "wwsql003_ww_supervisorsignoff",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "createdon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "statuscode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_alldgremovedsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_anycapbottlechangessig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cappercompressioncorrectsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cappercorrectchangepartssig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cappercorrectdispenserclearancesig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cappercutcapssig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cappergasflowinbottlemouthsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cappergasflowmetersig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cappermissingcapdetectorsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cappertankgassig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cappertopplateneckguidesig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cappertuckchallengetestsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cappertuckthreadredrawsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_corkcorrectchangepartssig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_corkcorrectcorkingbellssig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_corkcorrectheightsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_corkheadspacepressuresig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_corktimingsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_depalbottleboardfilledoutsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_depalsummarysheetcorrectsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_fillercorrectchangepartssig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_fillercorrectheightsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_fillerlowfilldetectorsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_filtrationcorrecttospecsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_filtrationcorrectvalvesopenclosedsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_luxallcapstorqueddown",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_luxcorrectchangepartssig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_luxcorrectcompression",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_luxcorrectdispenserplateclearance",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_luxcorrectheightsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_luxcorrectscrewcappercompression",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_luxcorrectspringsincapperheads",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_luxtorquesettings",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_missinglabelsensorsonsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_notes",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_operator",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_petcorrectspringsincappersig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_petlaserpowerturneddownsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_preflightchecksheetcompletedsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_productionline",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_pumpflow",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_rinsercorrectchangepartssig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_rinsercorrectheightsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_rinserfullcoveragesig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_rinserlowpressurecutoutsig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_run",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_supervisorsignoffid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_visibleglassonthelinesig",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_volumedifference",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ww_supervisorsignoff"
+		}
+	}
+}

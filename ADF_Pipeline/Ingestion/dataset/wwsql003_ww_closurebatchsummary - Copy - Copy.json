@@ -1,0 +1,130 @@
+{
+	"name": "wwsql003_ww_closurebatchsummary",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "crc5d_ww_billofmaterials",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "createdon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "statuscode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_closurebatchboxnumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_closurebatchcode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_closurebatchcorkexpirydate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ww_closurebatchcorkmoisture",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_closurebatchproductiondate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ww_closurebatchreferencenumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_closurebatchsequencenumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_closurebatchsummarycomments",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_closurebatchsummaryid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_closurebatchsummaryname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_closurebatchsummarysupplier",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_closurebatchsuppliercode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_closureils",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_closureowner",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_deleteline",
+				"type": "bit"
+			},
+			{
+				"name": "ww_deletelinename",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_operatorcode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_ordernumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_productionline",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_timeclosurebatchloaded",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ww_closurebatchsummary"
+		}
+	}
+}

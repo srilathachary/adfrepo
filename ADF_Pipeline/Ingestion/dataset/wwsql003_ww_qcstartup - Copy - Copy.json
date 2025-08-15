@@ -1,0 +1,163 @@
+{
+	"name": "wwsql003_ww_qcstartup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "createdon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "statuscode",
+				"type": "bit"
+			},
+			{
+				"name": "ww_alcoholinbottle",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_alcoholintank",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_alcoholpercentage",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_blsampleattachedtospecsheet",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bottlealcoholfirsttank",
+				"type": "bit"
+			},
+			{
+				"name": "ww_bottlecodeandguiderailsset",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_bottlecoderrunningandlegible",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_codeheight",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_countzeroed",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_cunos",
+				"type": "bit"
+			},
+			{
+				"name": "ww_cunosyesno",
+				"type": "bit"
+			},
+			{
+				"name": "ww_customertankername",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_microsneeded",
+				"type": "bit"
+			},
+			{
+				"name": "ww_microsneededyesno",
+				"type": "bit"
+			},
+			{
+				"name": "ww_noticerequired",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_operatorcode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_productionline",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_qcstartupid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_qcstartupname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_refract",
+				"type": "decimal",
+				"precision": 11,
+				"scale": 5
+			},
+			{
+				"name": "ww_refractbtl",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_refracttank",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_rockstopper",
+				"type": "bit"
+			},
+			{
+				"name": "ww_rockstopperyesno",
+				"type": "bit"
+			},
+			{
+				"name": "ww_run",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_runname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_tanker",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_visualcolourmatchtankbtl",
+				"type": "bit"
+			},
+			{
+				"name": "ww_wecs",
+				"type": "bit"
+			},
+			{
+				"name": "ww_wecsyesno",
+				"type": "bit"
+			},
+			{
+				"name": "ww_winemakersignatureid",
+				"type": "uniqueidentifier"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ww_qcstartup"
+		}
+	}
+}

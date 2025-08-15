@@ -1,0 +1,16 @@
+{
+	"name": "LabelChange",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DataVerse",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "CommonDataServiceForAppsEntity",
+		"schema": [],
+		"typeProperties": {
+			"entityName": "ww_labelchange"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,20 @@
+{
+	"name": "ADLS_DowntimePROD",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dlsadbiotprod",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "iotprod/bronze/dataverse/crc5d_newtable/landing",
+				"fileSystem": "dls-fs-iot"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

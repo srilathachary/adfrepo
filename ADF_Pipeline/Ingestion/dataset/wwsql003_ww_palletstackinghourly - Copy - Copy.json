@@ -1,0 +1,89 @@
+{
+	"name": "wwsql003_ww_palletstackinghourly",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WWSQL003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "ww_billofmaterials",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "createdon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ww_deleted",
+				"type": "bit"
+			},
+			{
+				"name": "ww_headcover",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ww_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_operatorcode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_palletnumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_palletstackinghourlyid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ww_palletsticker",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_pallettypechecked",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_slipsheets",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_stackingpattern",
+				"type": "nvarchar"
+			},
+			{
+				"name": "statuscode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ww_tidy",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ww_topsheet",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ww_palletstackinghourly"
+		}
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"name": "wwsql003_Datanow_Run",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DataNow",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Run_IOT"
+		}
+	}
+}
