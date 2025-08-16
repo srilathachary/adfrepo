@@ -1,9 +1,7 @@
 name: Check
 
 on:
-  push:
-    branches:
-      - adf_publish # Or your designated publish branch
+  workflow_dispatch:
 
 jobs:
   deploy:
