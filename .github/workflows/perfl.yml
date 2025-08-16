@@ -1,4 +1,4 @@
-name: Promote ADF to DEV (Linked Templates)
+name: AI Promote ADF to DEV (Linked Templates)
 
 on:
   workflow_dispatch:
