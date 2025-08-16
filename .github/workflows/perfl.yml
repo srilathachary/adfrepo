@@ -1,0 +1,182 @@
+name: Promote ADF to DEV (Linked Templates)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    name: Build ADF Template
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+
+      - name: Install npm packages
+        working-directory: ADF_Pipeline/Ingestion/build
+        run: npm install
+
+      - name: Validate ADF resources
+        working-directory: ADF_Pipeline/Ingestion/build
+        run: |
+          npm run build validate ../Ingestion \
+          --resource-id "/subscriptions/3915c783-2b04-4f6f-94d4-8d3ac1d3deb5/resourceGroups/Ravi_RG/providers/Microsoft.DataFactory/factories/practiceadf20252025"
+
+      - name: Export ADF ARM template
+        working-directory: ADF_Pipeline/Ingestion/build
+        run: |
+          npm run build export ../Ingestion \
+          --resource-id "/subscriptions/3915c783-2b04-4f6f-94d4-8d3ac1d3deb5/resourceGroups/Ravi_RG/providers/Microsoft.DataFactory/factories/practiceadf20252025" ExportedArmTemplate
+
+      - name: Upload ARM template artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ExportedArmTemplate
+          path: ADF_Pipeline/Ingestion/build/ExportedArmTemplate
+
+  release:
+    name: Release ADF to Azure (Linked Templates)
+    runs-on: ubuntu-latest
+    needs: build
+    environment: dev
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download ARM template artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ExportedArmTemplate
+          path: ./arm-template
+
+      - name: Azure Login
+        uses: azure/login@v1.4.6
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+
+      # Create a temporary storage account for linked templates
+      - name: Create temporary storage account
+        uses: azure/powershell@v1
+        with:
+          azPSVersion: "latest"
+          inlineScript: |
+            $resourceGroupName = "Ravi_RG"
+            $storageAccountName = "adflinked$(Get-Random -Minimum 1000 -Maximum 9999)"
+            $containerName = "linkedtemplates"
+            
+            # Create storage account
+            $storageAccount = New-AzStorageAccount `
+              -ResourceGroupName $resourceGroupName `
+              -AccountName $storageAccountName `
+              -Location "East US" `
+              -SkuName Standard_LRS `
+              -AllowBlobPublicAccess $true
+            
+            # Get storage context
+            $ctx = $storageAccount.Context
+            
+            # Create container with public access
+            New-AzStorageContainer -Name $containerName -Context $ctx -Permission Container
+            
+            # Store values for later steps
+            echo "STORAGE_ACCOUNT_NAME=$storageAccountName" >> $env:GITHUB_ENV
+            echo "CONTAINER_NAME=$containerName" >> $env:GITHUB_ENV
+            
+            Write-Host "Created storage account: $storageAccountName"
+
+      # Upload linked templates to storage account
+      - name: Upload linked templates to storage
+        uses: azure/powershell@v1
+        with:
+          azPSVersion: "latest"
+          inlineScript: |
+            $storageAccount = Get-AzStorageAccount -ResourceGroupName "Ravi_RG" -AccountName $env:STORAGE_ACCOUNT_NAME
+            $ctx = $storageAccount.Context
+            
+            # Check if linkedTemplates folder exists
+            $linkedTemplatesPath = "./arm-template/linkedTemplates"
+            if (Test-Path $linkedTemplatesPath) {
+              Write-Host "Found linkedTemplates folder, uploading linked templates..."
+              
+              # Upload all files in linkedTemplates folder
+              Get-ChildItem -Path $linkedTemplatesPath -File | ForEach-Object {
+                Write-Host "Uploading $($_.Name)..."
+                Set-AzStorageBlobContent `
+                  -File $_.FullName `
+                  -Container $env:CONTAINER_NAME `
+                  -Blob $_.Name `
+                  -Context $ctx `
+                  -Force
+              }
+              
+              # Generate SAS token (valid for 2 hours)
+              $sasToken = New-AzStorageContainerSASToken `
+                -Container $env:CONTAINER_NAME `
+                -Context $ctx `
+                -Permission r `
+                -ExpiryTime (Get-Date).AddHours(2)
+              
+              # Get container URI
+              $containerUri = $ctx.BlobEndPoint + $env:CONTAINER_NAME
+              
+              # Store values for deployment
+              echo "CONTAINER_URI=$containerUri" >> $env:GITHUB_ENV
+              echo "SAS_TOKEN=$sasToken" >> $env:GITHUB_ENV
+              echo "USE_LINKED_TEMPLATES=true" >> $env:GITHUB_ENV
+              
+              Write-Host "Container URI: $containerUri"
+              Write-Host "SAS Token generated successfully"
+            } else {
+              Write-Host "No linkedTemplates folder found, using standard template..."
+              echo "USE_LINKED_TEMPLATES=false" >> $env:GITHUB_ENV
+            }
+
+      # Deploy Data Factory ARM template (Linked Templates)
+      - name: Deploy Data Factory ARM template (Linked)
+        if: env.USE_LINKED_TEMPLATES == 'true'
+        uses: Azure/data-factory-deploy-action@v1.2.0
+        with:
+          resourceGroupName: "Ravi_RG"
+          dataFactoryName: "practiceadf20252025"
+          armTemplateFile: "./arm-template/linkedTemplates/ArmTemplate_master.json"
+          armTemplateParametersFile: "./override_parameters/ArmTemplateParametersForFactory_DEV.json"
+          additionalParameters: >-
+            containerUri=${{ env.CONTAINER_URI }}
+            containerSasToken=${{ env.SAS_TOKEN }}
+            factoryName=practiceadf20252025
+
+      # Deploy Data Factory ARM template (Standard)
+      - name: Deploy Data Factory ARM template (Standard)
+        if: env.USE_LINKED_TEMPLATES == 'false'
+        uses: Azure/data-factory-deploy-action@v1.2.0
+        with:
+          resourceGroupName: "Ravi_RG"
+          dataFactoryName: "practiceadf20252025"
+          armTemplateFile: "./arm-template/ARMTemplateForFactory.json"
+          armTemplateParametersFile: "./override_parameters/ARMTemplateParametersForFactory_DEV.json"
+
+      # Clean up temporary storage account
+      - name: Clean up temporary storage account
+        if: always() && env.USE_LINKED_TEMPLATES == 'true'
+        uses: azure/powershell@v1
+        with:
+          azPSVersion: "latest"
+          inlineScript: |
+            try {
+              Remove-AzStorageAccount `
+                -ResourceGroupName "Ravi_RG" `
+                -AccountName $env:STORAGE_ACCOUNT_NAME `
+                -Force
+              Write-Host "Temporary storage account $env:STORAGE_ACCOUNT_NAME removed successfully"
+            } catch {
+              Write-Host "Failed to remove temporary storage account: $($_.Exception.Message)"
+            }

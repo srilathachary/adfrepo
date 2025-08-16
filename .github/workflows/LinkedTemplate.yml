@@ -1,0 +1,83 @@
+# .github/workflows/adf_linked_templates_deploy.yml
+name: Build and Deploy Azure Data Factory Linked Templates
+
+on:
+  push:
+    branches:
+      - main
+      - adf_publish
+  workflow_dispatch:
+
+jobs:
+  build-arm-templates:
+    name: Build ARM Templates
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Azure Data Factory utilities
+        run: npm install -g @microsoft/azure-data-factory-utilities
+
+      - name: Generate ARM templates
+        run: |
+          adf publish \
+            --adfDirectory ./my-adf-directory \
+            --output ./adf_publish
+        # Adjust the directory according to your repo structure
+
+      - name: Upload ARM templates as artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: adf-arm-templates
+          path: ./adf_publish
+
+  deploy-adf:
+    name: Deploy to Azure Data Factory
+    runs-on: ubuntu-latest
+    needs: build-arm-templates
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download ARM templates artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: adf-arm-templates
+
+      - name: Azure Login (Managed Identity)
+        uses: Azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Upload linked templates to Azure Storage
+        uses: azure/cli@v1
+        with:
+          inlineScript: |
+            az storage blob upload-batch \
+              -d '$web' \
+              -s './adf_publish/linkedTemplates' \
+              --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }}
+
+      - name: Deploy Data Factory linked ARM templates
+        uses: Azure/arm-deploy@v1
+        with:
+          template: ./adf_publish/linkedTemplates/ArmTemplate_master.json
+          parameters: >
+            factoryName=${{ secrets.ADF_FACTORY_NAME }}
+            containerURI=${{ secrets.LINKED_CONTAINER_URI }}
+            containerSasToken=${{ secrets.LINKED_SAS_TOKEN }}
+          deploymentName: Deploy-ADF-LinkedTemplates
+          resourceGroupName: ${{ secrets.ADF_RESOURCE_GROUP }}
+
+      - name: Post Deployment Steps (Optional)
+        run: echo "Deployment complete"
