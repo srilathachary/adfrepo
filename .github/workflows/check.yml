@@ -1,0 +1,29 @@
+name: Deploy Azure Data Factory
+
+on:
+  push:
+    branches:
+      - adf_publish # Or your designated publish branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v1.4.6
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+
+      - name: Deploy Linked ARM Template
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          resourceGroupName: "Ravi_RG"
+          template: ./linkedTemplates/ArmTemplate_master.json
+          parameters: ./linkedTemplates/ArmTemplateParameters_master.json
+          parameters-override: |
+            _artifactsLocation="${{ secrets.CONTAINER_URI }}"
+            _artifactsLocationSasToken="${{ secrets.CONTAINER_SAS_TOKEN }}"
