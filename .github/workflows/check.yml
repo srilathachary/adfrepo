@@ -1,4 +1,4 @@
-name: Deploy Azure Data Factory
+name: Check
 
 on:
   push:
