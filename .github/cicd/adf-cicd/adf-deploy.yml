@@ -1,0 +1,112 @@
+# This steps template take an ADF published artifact and deploys the ARM template to the target ADF instance
+
+parameters:
+- name: ADFArtifactName
+  type: string
+- name: AzureResourceManagerConnection
+  type: string
+- name: DataFactoryName
+  type: string
+- name: ResourceGroupName
+  type: string
+- name: ResourceGroupLocation
+  type: string
+- name: DataFactoryTemplateParametersFilePath
+  type: string
+
+# ADF Linked Template Parameters
+- name: TemplateSpecsResourceGroupName
+  type: string
+- name: TemplateSpecsResourceGroupLocation
+  type: string
+- name: TemplateSpecMasterName
+  type: string
+- name: TemplateSpecMasterVersionNumber
+  type: string
+
+# Environment
+- name: Environment
+  type: string
+  values:
+  - UAT
+  - PROD
+
+
+steps:
+- checkout: self
+  displayName: "Checkout Source Repo Code"
+
+- powershell: |
+    Write-Host "Attempting to deploy the ADF ARM Template to Data Factory ${{ parameters.DataFactoryName }} in resource group: ${{ parameters.ResourceGroupName }} in the ${{ parameters.Environment }} environment."
+  displayName: "Display The Deployed To ADF Info"
+
+- task: DownloadPipelineArtifact@2
+  displayName: "Download The ADF Artifact"
+  inputs:
+    buildType: "current"
+    artifactName: "${{ parameters.ADFArtifactName }}"
+    targetpath: "$(Pipeline.Workspace)/ADFArtifact"
+
+# - task: CmdLine@2
+#   displayName: "List Contents of the Pipeline ADF Artifact Workspace"
+#   inputs:
+#     script: dir
+#     workingDirectory: "$(Pipeline.Workspace)/ADFArtifact"
+
+- task: AzurePowerShell@5
+  displayName: "Stop Current ADF Triggers"
+  inputs:
+    azureSubscription: "${{ parameters.AzureResourceManagerConnection }}"
+    pwsh: true
+    azurePowerShellVersion: "LatestVersion"
+    ScriptType: "FilePath"
+    ScriptPath: "$(Pipeline.Workspace)/ADFArtifact/PrePostDeploymentScript.ps1"
+    scriptArguments:
+      -ArmTemplate "$(Pipeline.Workspace)/ADFArtifact/ARMTemplateForFactory.json"
+      -ArmTemplateParameters "${{ parameters.DataFactoryTemplateParametersFilePath }}"
+      -ResourceGroupName "${{ parameters.ResourceGroupName }}"
+      -DataFactoryName "${{ parameters.DataFactoryName }}"
+      -predeployment $true
+      -deleteDeployment $false
+
+- task: AzureCLI@2
+  displayName: 'Deploy To ADF Using Linked Template Spec'
+  inputs:
+    azureSubscription: 'DataFactoryCICDAzureResourceManager'
+    scriptType: 'pscore'
+    targetType: 'filePath'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      Write-Host "Setting the subscription based on the ${{ parameters.Environment }} environment."
+      
+      if('${{ parameters.Environment }}' -eq 'UAT'){
+        az account set --subscription '$(UATSubscriptionID)'
+      }else {
+        az account set --subscription '$(PRODSubscriptionID)'
+      }
+      
+      Write-Host "Attempting to retrieve the resource ID for the new ${{ parameters.TemplateSpecMasterName }} Template Spec"
+      $TemplateSpecResourceID = $(az ts show --name '${{ parameters.TemplateSpecMasterName }}' --resource-group '${{ parameters.TemplateSpecsResourceGroupName }}' --version '${{ parameters.TemplateSpecMasterVersionNumber }}' --query "id")
+      $TemplateSpecResourceID = $TemplateSpecResourceID.replace("`"","") # removes the initial and ending double quotes from the string
+
+      Write-Host "Successfully retrieved the resource ID for the new master Template Spec ${{ parameters.TemplateSpecMasterName }}"
+
+      Write-Host "Attempting to deploy the master linked Template Spec to Data Factory ${{ parameters.DataFactoryName }}. This may take a few minutes."
+      az deployment group create --name 'ArmTemplate_master_${{ parameters.TemplateSpecMasterName }}'--resource-group '${{ parameters.ResourceGroupName }}' --template-spec $TemplateSpecResourceID --parameters '${{ parameters.DataFactoryTemplateParametersFilePath }}' --output none
+      Write-Host "Successfully deployed to Data Factory ${{ parameters.DataFactoryName }} in Resource Group ${{ parameters.ResourceGroupName }}"
+
+- task: AzurePowerShell@5
+  displayName: "Cleanup Resource And Start ADF Triggers"
+  inputs:
+    azureSubscription: "${{ parameters.azureResourceManagerConnection }}"
+    pwsh: true
+    azurePowerShellVersion: "LatestVersion"
+    ScriptType: "FilePath"
+    ScriptPath: "$(Pipeline.Workspace)/ADFArtifact/PrePostDeploymentScript.ps1"
+    ScriptArguments:
+      -ArmTemplate "$(Pipeline.Workspace)/ADFArtifact/ARMTemplateForFactory.json"
+      -ArmTemplateParameters "${{ parameters.DataFactoryTemplateParametersFilePath }}"
+      -ResourceGroupName "${{ parameters.ResourceGroupName }}"
+      -DataFactoryName "${{ parameters.DataFactoryName }}"
+      -predeployment $false
+      -deleteDeployment $true

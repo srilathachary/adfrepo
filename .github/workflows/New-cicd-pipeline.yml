@@ -1,0 +1,104 @@
+name: DataFactory-CICD-LinkedTemplates-$(Date:yyyyMMdd)$(Rev:.r)
+
+# ADF is the shortened version of Azure Data Factory
+
+trigger: none
+# - main # Will trigger the pipeline after a commit to the main branch. Can update to trigger: none to only run the pipeline manually.
+
+pool:
+  vmImage: "windows-latest" # https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml # macOS-latest, ubuntu-latest
+
+stages:
+- stage: BuildDEVDataFactory
+  displayName: "Build DEV Data Factory"
+  
+  variables:
+  - template: variables/dev-variables.yml
+
+  jobs:
+  - job: ValidateAndBuildDataFactoryTemplate
+    displayName: "Build DEV Data Factory"
+    steps:
+    - template: adf-cicd/adf-build.yml
+      parameters:
+        DataFactoryName: "${{ variables.BuildDataFactoryName }}"
+        ResourceGroupName: "${{ variables.BuildDataFactoryResourceGroupName }}"
+        ADFArtifactName: "${{ variables.ADFArtifactName }}"
+        WorkingDirectory: "${{ variables.WorkingDirectory }}"
+
+
+    - task: DownloadPipelineArtifact@2
+      displayName: "Download The ADF Artifact"
+      inputs:
+        buildType: "current"
+        artifactName: "${{ variables.ADFArtifactName }}"
+        targetpath: "$(Pipeline.Workspace)/${{ variables.ADFArtifactName }}"
+    
+
+    - task: AzureCLI@2
+      displayName: 'Create Template Specs for ADF Linked ARM Templates'
+      inputs:
+        azureSubscription: 'DataFactoryCICDAzureResourceManager'
+        scriptType: 'pscore'
+        targetType: 'filePath'
+        scriptLocation: 'scriptPath'
+        scriptPath: '${{ variables.WorkingDirectory }}/cicd/new-linked-templates-process/new-linked-template-create-deploy.ps1' # $(System.DefaultWorkingDirectory)/cicd/... also works
+        arguments: "-FolderPathADFLinkedARMTemplates '$(Pipeline.Workspace)/${{ variables.ADFArtifactName }}/linkedTemplates' 
+                    -DeployTemplateSpecsResourceGroupName '${{ variables.DeployTemplateSpecsResourceGroupName }}' 
+                    -DeployTemplateSpecsResourceGroupLocation '${{ variables.DeployTemplateSpecsResourceGroupLocation }}' 
+                    -TemplateSpecsVersionNumber '${{ variables.TemplateSpecsVersionNumber }}'
+                    -TemplateSpecMasterName '${{ variables.TemplateSpecMasterName }}'
+                    -OutputFolderPathNewADFMasterARMTemplate  '${{ variables.WorkingDirectory }}'" # Don't change this path
+                    # FolderPathADFLinkedARMTemplates is where the pipeline stores the Data Factory (ADF) linked ARM Templates
+
+    
+    - task: PublishPipelineArtifact@1
+      displayName: "Publish New Linked ARM Template Master File"
+      inputs:
+        targetPath: "${{ variables.WorkingDirectory }}/${{ variables.TemplateSpecMasterName }}.json"
+        artifactName: "NewLinkedARMTemplateMasterFile"
+        publishLocation: "pipeline"
+            
+     
+# DEPLOY TO DEV
+- stage: DeployToDEV
+  dependsOn: BuildDEVDataFactory
+  condition: succeeded()
+  displayName: "Deploy To UAT"
+
+  variables:
+  - template: variables/dev-variables.yml
+
+  jobs:
+  - job: DeployAzureResources
+    displayName: "Deploy Azure Resources Via Bicep"
+    steps:
+    - template: azure-resources/deploy-azure-resources.yml
+      parameters:
+        AzureResourceManagerConnection: "${{ variables.AzureResourceManagerConnection }}"
+        DataFactoryName: "${{ variables.DataFactoryName }}"
+        ADFResourceGroupName: "${{ variables.ADFResourceGroupName }}"
+        ADFBicepTemplateFilePath: "${{ variables.ADFBicepTemplateFilePath }}"
+      
+
+  - job: DeployDataFactory
+    displayName: "Deploy ADF Using Linked Template Specs To Target ADF"
+    dependsOn: DeployAzureResources
+    condition: succeeded()
+    steps:
+    - template: adf-cicd/adf-deploy.yml
+      parameters:
+        AzureResourceManagerConnection: "${{ variables.AzureResourceManagerConnection }}"
+        DataFactoryName: "${{ variables.DataFactoryName }}"
+        DataFactoryTemplateParametersFilePath: "${{ variables.DataFactoryTemplateParametersFilePath }}"
+        ResourceGroupName: "${{ variables.ADFResourceGroupName }}"
+        ResourceGroupLocation: "${{ variables.ResourceGroupLocation }}"
+        ADFArtifactName: "${{ variables.ADFArtifactName }}"
+        Environment: "${{ variables.Environment }}"
+        # ADF Linked Template Variables
+        TemplateSpecsResourceGroupName: "${{ variables.TemplateSpecsResourceGroupName }}"
+        TemplateSpecsResourceGroupLocation: "${{ variables.TemplateSpecsResourceGroupLocation }}"
+        TemplateSpecMasterName: "${{ variables.TemplateSpecMasterName }}"
+        TemplateSpecMasterVersionNumber: "${{ variables.TemplateSpecMasterVersionNumber }}"
+
+

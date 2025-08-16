@@ -1,0 +1,28 @@
+# DEV Pipeline Variables
+
+variables: 
+- name: BuildDataFactoryName
+  value: "practiceadf20252025"
+
+- name: BuildDataFactoryResourceGroupName
+  value: "Ravi_RG"
+
+- name: ADFArtifactName # Data Factory artifact name created during the adf-build.yml job template
+  value: ADFArtifact
+
+- name: WorkingDirectory
+  value: "$(Build.Repository.LocalPath)" # Predefined Azure Pipeline variable that specifies the beginning of the checked out code
+
+
+# Linked ADF ARM Template Deployment Variables
+- name: DeployTemplateSpecsResourceGroupName
+  value: "Ravi_RG"
+
+- name: DeployTemplateSpecsResourceGroupLocation
+  value: "eastus"
+
+- name: TemplateSpecsVersionNumber # Version number for the Template Specs. Ex: 1.0.0.0 Ex2: 1.0.0.1 etc.
+  value: "1.0.0.0"
+
+- name: TemplateSpecMasterName # This is the name that will be used when creating the master Template Spec (which will be used instead of the original ADF master Linked ARM Template).
+  value: "NewARMTemplateV2_master"

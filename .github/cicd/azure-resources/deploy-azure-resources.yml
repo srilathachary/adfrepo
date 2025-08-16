@@ -1,0 +1,32 @@
+
+parameters:
+- name: AzureResourceManagerConnection
+  type: string
+  default: DataFactoryCICDAzureResourceManager
+
+# Data Factory (ADF)
+- name: DataFactoryName
+  type: string
+- name: ADFResourceGroupName
+  type: string
+- name: ADFBicepTemplateFilePath
+  type: string
+  default: "$(Build.Repository.LocalPath)/cicd/azure-resources/adf.bicep"
+
+
+steps:
+- checkout: self
+  displayName: "Checkout Source Repo Code"
+
+- task: AzureCLI@2
+  displayName: "Data Factory Deploy Via Bicep"
+  inputs:
+    azureSubscription: "${{ parameters.AzureResourceManagerConnection }}"
+    scriptType: bash
+    scriptLocation: "inlineScript"
+    inlineScript: |
+      az deployment group create \
+        --name "MyADFDeployment$(Build.BuildNumber)" \
+        --resource-group "${{ parameters.ADFResourceGroupName }}" \
+        --template-file "${{ parameters.ADFBicepTemplateFilePath }}" \
+        --parameters dataFactoryName="${{ parameters.DataFactoryName }}"
