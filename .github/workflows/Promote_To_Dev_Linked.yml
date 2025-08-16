@@ -70,4 +70,5 @@ jobs:
           resourceGroupName: "Ravi_RG"
           dataFactoryName: "practiceadf20252025"
           armTemplateFile: "./linked-templates/linkedTemplates/ArmTemplate_master.json"
+          armTemplateParametersFile: "./linked-templates/linkedTemplates/ArmTemplateParameters_master.json"
           #armTemplateParametersFile: "./override_parameters/ARMTemplateParametersForFactory_DEV.json"
