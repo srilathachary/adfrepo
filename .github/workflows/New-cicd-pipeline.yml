@@ -1,9 +1,8 @@
 name: DataFactory-CICD-LinkedTemplates-$(Date:yyyyMMdd)$(Rev:.r)
 
+on:
+  workflow_dispatch:
 # ADF is the shortened version of Azure Data Factory
-
-trigger: none
-# - main # Will trigger the pipeline after a commit to the main branch. Can update to trigger: none to only run the pipeline manually.
 
 pool:
   vmImage: "windows-latest" # https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml # macOS-latest, ubuntu-latest
