@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "value": "practiceadf20252025"
+        },
+        "default_properties_g_param_1_value": {
+            "value": "main"
+        },
+        "default_properties_g_param_2_value": {
+            "value": "main"
+        },
+        "default_properties_g_param_3_value": {
+            "value": "main"
+        },
+        "default_properties_g_param_4_value": {
+            "value": "main"
+        },
+        "default_properties_g_param_5_value": {
+            "value": "main"
+        },
+        "containerUri": {
+            "value": ""
+        },
+        "containerSasToken": {
+            "value": ""
+        }
+    }
+}

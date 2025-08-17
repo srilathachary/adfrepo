@@ -1,0 +1,77 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "practiceadf20252025"
+        },
+        "default_properties_g_param_1_value": {
+            "type": "string",
+            "defaultValue": "main"
+        },
+        "default_properties_g_param_2_value": {
+            "type": "string",
+            "defaultValue": "main"
+        },
+        "default_properties_g_param_3_value": {
+            "type": "string",
+            "defaultValue": "main"
+        },
+        "default_properties_g_param_4_value": {
+            "type": "string",
+            "defaultValue": "main"
+        },
+        "default_properties_g_param_5_value": {
+            "type": "string",
+            "defaultValue": "main"
+        },
+        "containerUri": {
+            "type": "string",
+            "metadata": "URI to storage account containing linked ARM templates"
+        },
+        "containerSasToken": {
+            "type": "string",
+            "metadata": "Sas token to storage account containing linked ARM templates"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "practiceadf20252025_ArmTemplate_0",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2024-03-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    },
+                    "default_properties_g_param_1_value": {
+                        "value": "[parameters('default_properties_g_param_1_value')]"
+                    },
+                    "default_properties_g_param_2_value": {
+                        "value": "[parameters('default_properties_g_param_2_value')]"
+                    },
+                    "default_properties_g_param_3_value": {
+                        "value": "[parameters('default_properties_g_param_3_value')]"
+                    },
+                    "default_properties_g_param_4_value": {
+                        "value": "[parameters('default_properties_g_param_4_value')]"
+                    },
+                    "default_properties_g_param_5_value": {
+                        "value": "[parameters('default_properties_g_param_5_value')]"
+                    }
+                }
+            },
+            "dependsOn": []
+        }
+    ]
+}
