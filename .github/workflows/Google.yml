@@ -20,7 +20,7 @@ jobs:
       - name: Upload Linked Templates to Storage Account
         run: |
           az storage container create --name templates --account-name datalake31052025
-          az storage blob upload --container-name link_templates --file ./linked-template.json --name linked-template.json --account-name datalake31052025
+          az storage blob upload --container-name templates --file ./linked-template.json --name linked-template.json --account-name datalake31052025
           SAS_TOKEN=$(az storage container generate-sas --name templates --account-name $datalake31052025 --permissions r --expiry $(date -u +%Y-%m-%dT%H:%M:%SZ -d "+1 hour") --output tsv)
           echo "SAS_TOKEN=$SAS_TOKEN" >> $GITHUB_ENV
 
