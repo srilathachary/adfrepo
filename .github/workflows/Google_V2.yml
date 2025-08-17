@@ -72,7 +72,7 @@ jobs:
           parameters: >
             factoryName="practiceadf20252025"
             containerURI="https://datalake31052025.blob.core.windows.net/xyz"
-            containerSasToken="sp=r&st=2025-08-17T15:09:57Z&se=2025-08-17T23:24:57Z&spr=https&sv=2024-11-04&sr=c&sig=Y0rqPqBQPWjRTe%2BQArDBr9H1C8TzItfgs%2B3RGhFLsl0%3D"
+            containerSasToken="?sp=r&st=2025-08-17T15:38:23Z&se=2025-08-17T23:53:23Z&spr=https&sv=2024-11-04&sr=c&sig=dtxI%2F%2FXiUM%2BVCw97Z%2FGGDx%2B8HcEf1qa%2BhNu3cMdphwc%3D"
           deploymentName: Deploy-ADF-LinkedTemplates
           resourceGroupName: "Ravi_RG"
 
