@@ -71,8 +71,8 @@ jobs:
         with:
           subscriptionId: "3915c783-2b04-4f6f-94d4-8d3ac1d3deb5"
           resourceGroupName: "Ravi_RG"
-          template: ./linkedTemplates/ArmTemplate_master.json
-          parameters: ./override_parameters/ARMTemplateParametersForFactory_DEV.json
+          template: "./linkedTemplates/ArmTemplate_master.json"
+          parameters: "./override_parameters/ARMTemplateParametersForFactory_DEV.json"
           # parameters-override: |
           #   _artifactsLocation="${{ secrets.CONTAINER_URI }}"
           #   _artifactsLocationSasToken="${{ secrets.CONTAINER_SAS_TOKEN }}"
