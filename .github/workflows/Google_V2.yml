@@ -43,6 +43,7 @@ jobs:
           path: ADF_Pipeline/Ingestion/build/ExportedArmTemplate
   deploy:
     runs-on: ubuntu-latest
+    needs: build
     environment: dev    
     steps:
       - name: Checkout repository
