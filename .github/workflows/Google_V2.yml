@@ -66,9 +66,9 @@ jobs:
           az storage blob upload-batch -d xyz -s "./arm-template/linkedTemplates" --account-name datalake31052025 --overwrite --auth-mode login
 
 
-      - name: Deploy Main ARM Template
-        uses: azure/arm-deploy@v1
-        with:
-          resourceGroupName: datalake31052025
-          template: ./main-template.json
-          parameters: linkedTemplateUri='https://datalake31052025.blob.core.windows.net/templates/linked-template.json?${{ env.SAS_TOKEN }}'
+      # - name: Deploy Main ARM Template
+      #   uses: azure/arm-deploy@v1
+      #   with:
+      #     resourceGroupName: datalake31052025
+      #     template: ./main-template.json
+      #     parameters: linkedTemplateUri='https://datalake31052025.blob.core.windows.net/templates/linked-template.json?${{ env.SAS_TOKEN }}'
