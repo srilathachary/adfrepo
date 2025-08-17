@@ -65,24 +65,17 @@ jobs:
         run: |
           az storage blob upload-batch -d xyz -s "./arm-template/linkedTemplates" --account-name datalake31052025 --overwrite --auth-mode login
 
-      - name: Deploy ADF
+
+      - name: Deploy Linked ARM Template
         uses: azure/arm-deploy@v2
         with:
-          resourceGroupName: Ravi_RG
-          template: ./azuredeploy.json
-          parameters: examples/template/parameters.json storageAccountType=Standard_LRS sqlServerPassword=${{ secrets.SQL_SERVER }}
-          additionalArguments: "--what-if --rollback-on-error --what-if-exclude-change-types Create Ignore"
-
-      # - name: Deploy Linked ARM Template
-      #   uses: azure/arm-deploy@v1
-      #   with:
-      #     subscriptionId: "3915c783-2b04-4f6f-94d4-8d3ac1d3deb5"
-      #     resourceGroupName: "Ravi_RG"
-      #     template: ./linkedTemplates/ArmTemplate_master.json
-      #     parameters: ./linkedTemplates/ArmTemplateParameters_master.json
-      #     parameters-override: |
-      #       _artifactsLocation="${{ secrets.CONTAINER_URI }}"
-      #       _artifactsLocationSasToken="${{ secrets.CONTAINER_SAS_TOKEN }}"
+          subscriptionId: "3915c783-2b04-4f6f-94d4-8d3ac1d3deb5"
+          resourceGroupName: "Ravi_RG"
+          template: ./linkedTemplates/ArmTemplate_master.json
+          parameters: ./linkedTemplates/ArmTemplateParameters_master.json
+          # parameters-override: |
+          #   _artifactsLocation="${{ secrets.CONTAINER_URI }}"
+          #   _artifactsLocationSasToken="${{ secrets.CONTAINER_SAS_TOKEN }}"
 
       # - name: Deploy Data Factory ARM template
       #   uses: Azure/data-factory-deploy-action@v1.2.0
