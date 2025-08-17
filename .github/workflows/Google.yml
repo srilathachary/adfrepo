@@ -19,7 +19,7 @@ jobs:
 
       - name: Upload Linked Templates to Storage Account
         run: |
-          az storage blob upload --account-name datalake31052025 -d "xyz" -s 'override_parameters' --overwrite
+          az storage blob upload-batch -d xyz -s "linkedTemplates" --account-name datalake31052025 --overwrite
 
 
       - name: Deploy Main ARM Template
