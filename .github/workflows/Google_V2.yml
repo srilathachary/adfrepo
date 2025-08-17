@@ -71,7 +71,8 @@ jobs:
         with:
           subscriptionId: "3915c783-2b04-4f6f-94d4-8d3ac1d3deb5"
           resourceGroupName: "Ravi_RG"
-          template: "./linkedTemplates/ArmTemplate_master.json"
+          #template: "./linkedTemplates/ArmTemplate_master.json"
+          template: "https://datalake31052025.blob.core.windows.net/xyz/ArmTemplateParameters_master.json"
           #parameters: "./override_parameters/ARMTemplateParametersForFactory_DEV.json"
           #parameters-override: |
           parameters: >
