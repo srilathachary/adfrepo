@@ -68,7 +68,7 @@ jobs:
       - name: Deploy Data Factory linked ARM templates
         uses: Azure/arm-deploy@v1
         with:
-          template: https://datalake31052025.blob.core.windows.net/xyz/ArmTemplateParameters_master.json       
+          template: "https://datalake31052025.blob.core.windows.net/xyz/ArmTemplateParameters_master.json"
           parameters: >
             factoryName="practiceadf20252025"
             containerURI="https://datalake31052025.blob.core.windows.net/xyz"
