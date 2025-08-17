@@ -1,13 +1,12 @@
 name: Google
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: dev    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
