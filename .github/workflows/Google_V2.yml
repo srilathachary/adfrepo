@@ -65,14 +65,25 @@ jobs:
         run: |
           az storage blob upload-batch -d xyz -s "./arm-template/linkedTemplates" --account-name datalake31052025 --overwrite --auth-mode login
 
+      # - name: Deploy Linked ARM Template
+      #   uses: azure/arm-deploy@v1
+      #   with:
+      #     subscriptionId: "3915c783-2b04-4f6f-94d4-8d3ac1d3deb5"
+      #     resourceGroupName: "Ravi_RG"
+      #     template: ./linkedTemplates/ArmTemplate_master.json
+      #     parameters: ./linkedTemplates/ArmTemplateParameters_master.json
+      #     parameters-override: |
+      #       _artifactsLocation="${{ secrets.CONTAINER_URI }}"
+      #       _artifactsLocationSasToken="${{ secrets.CONTAINER_SAS_TOKEN }}"
+
       - name: Deploy Data Factory ARM template
         uses: Azure/data-factory-deploy-action@v1.2.0
         with:
-          resourceGroupName: "Ravi_RG"             # 💡 Replace with your Azure Resource Group
-          dataFactoryName: "practiceadf20252025"            # 💡 Replace with your Data Factory name
-          armTemplateFile: "./linkedTemplates/ArmTemplateParameters_master.json"            # 💡 Confirm filename matches export
-          armTemplateParametersFile: "./linkedTemplates/ArmTemplateParameters_master.json"  # 💡 Check path/name
-          #additionalParameters: -factoryName practiceadf20252025  # Required by ADF ARM deployment
+          resourceGroupName: "Ravi_RG"
+          dataFactoryName: "practiceadf20252025"
+          armTemplateFile: "./linkedTemplates/ArmTemplate_master.json"
+          armTemplateParametersFile: "./linkedTemplates/ArmTemplateParameters_master.json"
+          additionalParameters: -factoryName practiceadf20252025  # Required by ADF ARM deployment
           
       # - name: Deploy Data Factory linked ARM templates
       #   uses: Azure/arm-deploy@v1
