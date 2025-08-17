@@ -73,9 +73,9 @@ jobs:
           resourceGroupName: "Ravi_RG"
           template: "./linkedTemplates/ArmTemplate_master.json"
           parameters: "./override_parameters/ARMTemplateParametersForFactory_DEV.json"
-          # parameters-override: |
-          #   _artifactsLocation="${{ secrets.CONTAINER_URI }}"
-          #   _artifactsLocationSasToken="${{ secrets.CONTAINER_SAS_TOKEN }}"
+          parameters-override: |
+            _artifactsLocation="https://datalake31052025.blob.core.windows.net/xyz"
+            _artifactsLocationSasToken="sp=r&st=2025-08-17T15:38:23Z&se=2025-08-17T23:53:23Z&spr=https&sv=2024-11-04&sr=c&sig=dtxI%2F%2FXiUM%2BVCw97Z%2FGGDx%2B8HcEf1qa%2BhNu3cMdphwc%3D"
 
       # - name: Deploy Data Factory ARM template
       #   uses: Azure/data-factory-deploy-action@v1.2.0
