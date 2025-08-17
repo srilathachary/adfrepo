@@ -1,4 +1,4 @@
-name: Promote ADF to DEV
+name: Google_V2
 
 on:
   workflow_dispatch:
