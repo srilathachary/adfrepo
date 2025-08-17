@@ -83,7 +83,7 @@ jobs:
           dataFactoryName: "practiceadf20252025"
           armTemplateFile: "./linkedTemplates/ArmTemplate_master.json"
           armTemplateParametersFile: "./linkedTemplates/ArmTemplateParameters_master.json"
-          additionalParameters: -factoryName practiceadf20252025  # Required by ADF ARM deployment
+          #additionalParameters: -factoryName practiceadf20252025  # Required by ADF ARM deployment
           
       # - name: Deploy Data Factory linked ARM templates
       #   uses: Azure/arm-deploy@v1
