@@ -8,7 +8,7 @@ jobs:
       - uses: actions/checkout@v3
       - run: docker run -d -p 10000:10000 mcr.microsoft.com/azure-storage/azurite
 
-      - name: Upload file and get SAS token
+      - name: Install Azure CLI
         run: |
           # Install Azure CLI (if not already present on the runner)
           curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
@@ -16,7 +16,7 @@ jobs:
       - name: Create a container
         run: |
           # Create a container
-          az storage container create --name MyStorageContainer --account-name devstoreaccount1 --account-key Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw== --container-name mycontainer --connection-string "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
+          az storage container create --name mycontainer --account-name devstoreaccount1 --account-key Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw== --connection-string "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
 
       - name: Create a dummy file to upload
         run: |          
@@ -36,4 +36,4 @@ jobs:
       - name: Output the SAS token
         run: |          
           # Output the SAS token
-          echo "SAS Token: $sas_token"      
+          echo "SAS Token: $sas_token"
