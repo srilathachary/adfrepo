@@ -13,17 +13,27 @@ jobs:
           # Install Azure CLI (if not already present on the runner)
           curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
+      - name: Create a container
+        run: |
           # Create a container
           az storage container create --account-name devstoreaccount1 --account-key Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw== --container-name mycontainer --connection-string "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
 
+      - name: Create a dummy file to upload
+        run: |          
           # Create a dummy file to upload
           echo "This is a test file." > dummy.txt
 
+      - name: Upload the file
+        run: |          
           # Upload the file
           az storage blob upload --account-name devstoreaccount1 --account-key Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw== --container-name mycontainer --file dummy.txt --name dummy.txt --connection-string "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
 
+      - name: Generate a SAS token for the file
+        run: |             
           # Generate a SAS token for the file (read access, valid for one hour)
           sas_token=$(az storage blob generate-sas --account-name devstoreaccount1 --account-key Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw== --container-name mycontainer --name dummy.txt --permissions r --expiry $(date -u -d "+1 hour" '+%Y-%m-%dT%H:%MZ') --connection-string "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;")
 
+      - name: Output the SAS token
+        run: |          
           # Output the SAS token
           echo "SAS Token: $sas_token"      
