@@ -42,6 +42,13 @@ jobs:
         with:
           name: ExportedArmTemplate
           path: ADF_Pipeline/Ingestion/build/ExportedArmTemplate
+
+      - name: Download ARM template artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ExportedArmTemplate
+          path: ./arm-template
+                    
   # deploy:
   #   runs-on: ubuntu-latest
   #   needs: build
