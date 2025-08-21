@@ -8,3 +8,23 @@ jobs:
       - uses: actions/checkout@v3
       - run: docker run -d -p 10000:10000 mcr.microsoft.com/azure-storage/azurite
       - run: dotnet test
+
+      - name: Upload file and get SAS token
+        run: |
+          # Install Azure CLI (if not already present on the runner)
+          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+          # Create a container
+          az storage container create --account-name devstoreaccount1 --account-key Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw== --container-name mycontainer --connection-string "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
+
+          # Create a dummy file to upload
+          echo "This is a test file." > dummy.txt
+
+          # Upload the file
+          az storage blob upload --account-name devstoreaccount1 --account-key Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw== --container-name mycontainer --file dummy.txt --name dummy.txt --connection-string "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
+
+          # Generate a SAS token for the file (read access, valid for one hour)
+          sas_token=$(az storage blob generate-sas --account-name devstoreaccount1 --account-key Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw== --container-name mycontainer --name dummy.txt --permissions r --expiry $(date -u -d "+1 hour" '+%Y-%m-%dT%H:%MZ') --connection-string "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;")
+
+          # Output the SAS token
+          echo "SAS Token: $sas_token"      
