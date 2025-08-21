@@ -1,53 +1,57 @@
-name: Azurite Integration Tests
+name: Azure Storage Emulator Test
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  azurite-tests:
-    runs-on: ubuntu-latest # You can specify other runners like windows-latest or macOS-latest
+  test-azure-storage:
+    runs-on: ubuntu-latest
+    
+    services:
+      azurite:
+        image: mcr.microsoft.com/azure-storage/azurite
+        ports:
+          - 10000:10000  # Blob service
+          - 10001:10001  # Queue service  
+          - 10002:10002  # Table service
+        options: >-
+          --health-cmd "curl -f http://localhost:10000/"
+          --health-interval 30s
+          --health-timeout 10s
+          --health-retries 5
+
     steps:
-    - uses: actions/checkout@v3 # Checks out your repository code
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-    # Install and run Azurite
-    - name: Install Azurite
-      id: azurite # Give this step an ID to reference its outputs
-      uses: potatoqualitee/azuright@v1.1 # Using the Azurite GitHub Action
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
       with:
-        # Optional: Customize Azurite ports or enable HTTPS
-        # blob-port: 10000 
-        # queue-port: 10001
-        # table-port: 10002
-        self-signed-cert: true # Example: enable HTTPS with a self-signed certificate
+        node-version: '18'
+        cache: 'npm'
 
-    # Optional: If your tests require specific PowerShell modules, install them
-    - name: Install and cache PowerShell Modules
-      uses: potatoqualitee/psmodulecache@v4
+    - name: Install dependencies
+      run: |
+        npm install @azure/storage-blob @azure/identity
+
+    - name: Create test file
+      run: |
+        echo "This is a test file for Azure Storage upload" > test-file.txt
+        echo "Created at $(date)" >> test-file.txt
+
+    - name: Test Azure Storage operations
+      run: node test-storage.js
+      env:
+        AZURE_STORAGE_CONNECTION_STRING: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
+        
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v4
       with:
-        modules-to-cache: Az.Storage 
-
-    # Example: Run tests against the Azurite storage
-    - name: Run application tests
-      shell: pwsh # Using PowerShell for this example, you can use your preferred shell
-      run: |
-        Import-Module Az.Storage # Imports Azure Storage PowerShell module
-        $connstring = "${{ steps.azurite.outputs.connstring }}" # Retrieves the connection string from Azurite output
-
-        # You can now connect to Azurite services using this connection string
-        # and run your application's tests against it.
-        # This example creates a blob container for demonstration.
-        $blob = New-Object Azure.Storage.Blobs.BlobContainerClient($connstring, "sample-container")
-        $blob.CreateIfNotExists()
-        # Your actual test commands would go here, e.g., running unit tests or integration tests that interact with storage
-        # For instance: 
-        # dotnet test your_project/YourTests.csproj 
-        # npm test
-
-    # Example: Perform cleanup or additional actions
-    - name: Cleanup
-      shell: pwsh
-      run: |
-        # After testing, you can perform cleanup actions like deleting containers or blobs created during testing.
-        # This example shows deleting the container created earlier. 
-        # $blob.DeleteIfExists()
-        echo "Tests complete, optionally cleanup Azurite data if not using in-memory persistence"
+        name: storage-test-results
+        path: |
+          test-file.txt
+          storage-test-output.txt
