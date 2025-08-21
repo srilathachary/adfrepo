@@ -71,13 +71,13 @@ jobs:
 
       - name: Upload Linked Templates to Storage Account
         run: |
-          az storage blob upload \
+          az storage blob upload --overwrite \
             --account-name "datalake31052025" \
             --container-name "xyz" \
             --name "ARMTemplateForFactory.json" \
             --file "./arm-template/ARMTemplateForFactory.json" \
             --sas-token "sp=racwdlmeop&st=2025-08-21T06:03:21Z&se=2025-08-21T14:18:21Z&spr=https&sv=2024-11-04&sr=c&sig=Kvyrlqsgvfh3aGJf%2F5LWqg0cMB9TLn9AijGCczCAaYE%3D"
-            --overwrite
+            
           #  -d xyz -s "./arm-template/linkedTemplates"   --auth-mode login
 
       - name: Deployment ARM template from Blob Storage
