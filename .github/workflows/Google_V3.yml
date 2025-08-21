@@ -76,7 +76,7 @@ jobs:
             --container-name "xyz" \
             --name "ARMTemplateForFactory.json" \
             --file "./arm-template/ARMTemplateForFactory.json" \
-            --sas-token "sp=r&st=2025-08-21T06:03:21Z&se=2025-08-21T14:18:21Z&spr=https&sv=2024-11-04&sr=c&sig=qJlar4eyQcWENHZ%2BBecF7z5SjRfHycRDEwwnwlhJB3w%3D"
+            --sas-token "sp=racwdlmeop&st=2025-08-21T06:03:21Z&se=2025-08-21T14:18:21Z&spr=https&sv=2024-11-04&sr=c&sig=Kvyrlqsgvfh3aGJf%2F5LWqg0cMB9TLn9AijGCczCAaYE%3D"
           #  -d xyz -s "./arm-template/linkedTemplates"  --overwrite --auth-mode login
 
 
