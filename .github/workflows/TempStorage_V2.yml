@@ -18,7 +18,10 @@ jobs:
 
     - name: Start Azurite
       run: |
-        nohup azurite --blobHost 127.0.0.1 --blobPort 10000
+        nohup azurite --blobHost 127.0.0.1 --blobPort 10000 \
+                      --queueHost 127.0.0.1 --queuePort 10001 \
+                      --tableHost 127.0.0.1 --tablePort 10002 &
+
 
     - name: Install Azure CLI
       run: pip install azure-cli
