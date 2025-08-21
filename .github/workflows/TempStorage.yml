@@ -1,57 +1,60 @@
-name: Azure Storage Emulator Test
+name: Azurite Upload and SAS Token Generation
 
 on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-  test-azure-storage:
+  upload-to-azurite:
     runs-on: ubuntu-latest
-    
     services:
       azurite:
         image: mcr.microsoft.com/azure-storage/azurite
         ports:
-          - 10000:10000  # Blob service
-          - 10001:10001  # Queue service  
-          - 10002:10002  # Table service
-        options: >-
-          --health-cmd "curl -f http://localhost:10000/"
-          --health-interval 30s
-          --health-timeout 10s
-          --health-retries 5
+          - 10000:10000
+        options: --health-cmd "curl -f http://localhost:10000" --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-
-    - name: Install dependencies
+    - name: Install Azure Storage CLI
       run: |
-        npm install @azure/storage-blob @azure/identity
+        npm install -g azure-storage
 
     - name: Create test file
-      run: |
-        echo "This is a test file for Azure Storage upload" > test-file.txt
-        echo "Created at $(date)" >> test-file.txt
+      run: echo "Hello from GitHub Actions!" > testfile.txt
 
-    - name: Test Azure Storage operations
-      run: node test-storage.js
-      env:
-        AZURE_STORAGE_CONNECTION_STRING: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
-        
-    - name: Upload test results
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: storage-test-results
-        path: |
-          test-file.txt
-          storage-test-output.txt
+    - name: Upload to Azurite
+      run: |
+        node <<EOF
+        const azure = require('azure-storage');
+        const blobService = azure.createBlobService('devstoreaccount1', 'Eby8vdM02xNOcqFeqCnf2J==', 'http://127.0.0.1:10000/devstoreaccount1');
+
+        const containerName = 'testcontainer';
+        const blobName = 'testfile.txt';
+
+        blobService.createContainerIfNotExists(containerName, { publicAccessLevel: 'blob' }, (err) => {
+          if (err) throw err;
+
+          blobService.createBlockBlobFromLocalFile(containerName, blobName, 'testfile.txt', (err) => {
+            if (err) throw err;
+            console.log('File uploaded successfully.');
+
+            const startDate = new Date();
+            const expiryDate = new Date(startDate);
+            expiryDate.setMinutes(startDate.getMinutes() + 60);
+
+            const sharedAccessPolicy = {
+              AccessPolicy: {
+                Permissions: azure.BlobUtilities.SharedAccessPermissions.READ,
+                Start: startDate,
+                Expiry: expiryDate
+              }
+            };
+
+            const sasToken = blobService.generateSharedAccessSignature(containerName, blobName, sharedAccessPolicy);
+            const sasUrl = blobService.getUrl(containerName, blobName, sasToken);
+            console.log('SAS URL:', sasUrl);
+          });
+        });
+        EOF
