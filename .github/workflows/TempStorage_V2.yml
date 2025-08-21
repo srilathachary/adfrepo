@@ -25,6 +25,9 @@ jobs:
 
     - name: Install Azure CLI
       run: pip install azure-cli
+    
+    - name: show network
+      run: az storage account show -n accountname --query networkRuleSet
 
     - name: Create Blob Container
       run: az storage container create --name mycontainer --public-access container
