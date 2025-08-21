@@ -11,6 +11,7 @@ jobs:
   build:
     name: Build ADF Template
     runs-on: ubuntu-latest
+    environment: dev    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
