@@ -16,7 +16,7 @@ jobs:
       - name: Create a container
         run: |
           # Create a container
-          az storage container create --account-name devstoreaccount1 --account-key Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw== --container-name mycontainer --connection-string "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
+          az storage container create --name MyStorageContainer --account-name devstoreaccount1 --account-key Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw== --container-name mycontainer --connection-string "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJHzwXeBwGdHIlrYLg2OjcJzpkqWVSvm76MwVfR3pPzXQxL+oVbJ2tYgB4Bq4E4Xn3WJw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
 
       - name: Create a dummy file to upload
         run: |          
