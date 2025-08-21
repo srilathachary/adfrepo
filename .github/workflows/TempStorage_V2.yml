@@ -29,17 +29,17 @@ jobs:
     - name: Create Blob Container
       run: az storage container create --name mycontainer --public-access container
       env:
-        AZURE_STORAGE_CONNECTION_STRING: "UseDevelopmentStorage=true"
+        AZURE_STORAGE_CONNECTION_STRING: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFeqCnb...==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1"
 
     - name: Upload Blob
       run: az storage blob upload --container-name mycontainer --name test.yml --file test.yml
       env:
-        AZURE_STORAGE_CONNECTION_STRING: "UseDevelopmentStorage=true"
+        AZURE_STORAGE_CONNECTION_STRING: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFeqCnb...==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1"
 
     - name: List Blobs
       run: az storage blob list --container-name mycontainer --output table
       env:
-        AZURE_STORAGE_CONNECTION_STRING: "UseDevelopmentStorage=true"
+        AZURE_STORAGE_CONNECTION_STRING: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFeqCnb...==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1"
 
     - name: Generate SAS Token
       run: |
@@ -51,4 +51,4 @@ jobs:
           --expiry 2025-08-25T23:59:59Z \
           --https-only
       env:
-        AZURE_STORAGE_CONNECTION_STRING: "UseDevelopmentStorage=true"
+        AZURE_STORAGE_CONNECTION_STRING: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFeqCnb...==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1"
