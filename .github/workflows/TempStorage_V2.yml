@@ -1,0 +1,51 @@
+name: Azurite Blob Storage Setup
+
+on:
+  workflow_dispatch:
+
+jobs:
+  setup-azurite:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install Azurite
+      run: npm install -g azurite
+
+    - name: Start Azurite
+      run: |
+        nohup azurite --blobHost 127.0.0.1 --blobPort 10000
+
+    - name: Install Azure CLI
+      run: pip install azure-cli
+
+    - name: Create Blob Container
+      run: az storage container create --name mycontainer --public-access container
+      env:
+        AZURE_STORAGE_CONNECTION_STRING: "UseDevelopmentStorage=true"
+
+    - name: Upload Blob
+      run: az storage blob upload --container-name mycontainer --name test.yml --file test.yml
+      env:
+        AZURE_STORAGE_CONNECTION_STRING: "UseDevelopmentStorage=true"
+
+    - name: List Blobs
+      run: az storage blob list --container-name mycontainer --output table
+      env:
+        AZURE_STORAGE_CONNECTION_STRING: "UseDevelopmentStorage=true"
+
+    - name: Generate SAS Token
+      run: |
+        az storage blob generate-sas \
+          --account-name devstoreaccount1 \
+          --container-name mycontainer \
+          --name test.yml \
+          --permissions r \
+          --expiry 2025-08-25T23:59:59Z \
+          --https-only
+      env:
+        AZURE_STORAGE_CONNECTION_STRING: "UseDevelopmentStorage=true"
