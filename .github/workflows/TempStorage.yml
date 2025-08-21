@@ -2,32 +2,9 @@ name: Azure Emulator
 on:
   workflow_dispatch:
 jobs:
-  test-everywhere:
-    name: Test Action on all platforms
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
-
+  test:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Install and cache PowerShell Modules
-        uses: potatoqualitee/psmodulecache@v4
-        with:
-          modules-to-cache: Az.Storage
-
-      - name: Install Azurite
-        id: azuright
-        uses: potatoqualitee/azuright@v1.1
-        with:
-          self-signed-cert: true
-
-      - name: Test
-        shell: pwsh
-        run: |
-          Import-Module Az.Storage
-          $connstring = "${{ steps.azuright.outputs.connstring }}"
-          $blob = New-Object Azure.Storage.Blobs.BlobContainerClient($connstring, "sample-container")
-          $blob.CreateIfNotExists()
+      - uses: actions/checkout@v3
+      - run: docker run -d -p 10000:10000 mcr.microsoft.com/azure-storage/azurite
+      - run: dotnet test
