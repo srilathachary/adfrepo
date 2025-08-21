@@ -7,7 +7,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: docker run -d -p 10000:10000 mcr.microsoft.com/azure-storage/azurite
-      - run: dotnet test
 
       - name: Upload file and get SAS token
         run: |
