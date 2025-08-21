@@ -82,7 +82,8 @@ jobs:
 
       - name: Deployment ARM template from Blob Storage
         run: |
-          az deployment group create --resource-group Ravi_RG \          
+          az deployment group create \
+            --resource-group "Ravi_RG" \          
             --template-uri "https://datalake31052025.blob.core.windows.net/xyz/ARMTemplateForFactory.json?sp=racwdlmeop&st=2025-08-21T06:03:21Z&se=2025-08-21T14:18:21Z&spr=https&sv=2024-11-04&sr=c&sig=Kvyrlqsgvfh3aGJf%2F5LWqg0cMB9TLn9AijGCczCAaYE%3D" \
             --parameters "./override_parameters/ARMTemplateParametersForFactory_DEV.json"
 
