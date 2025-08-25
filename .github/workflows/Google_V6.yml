@@ -63,49 +63,46 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           enable-AzPSSession: true
-      # 12. Deploy ARM template from Blob Storage
-      - name: Deployment ARM template from Blob Storage
-        run: | 
-          az deployment group create --resource-group Ravi_RG --template-uri "https://datalake31052025.blob.core.windows.net/xyz/ARMTemplateForFactory.json?se=2025-08-27T23%3A59%3A59Z&sp=r&spr=https&sv=2022-11-02&sr=b&sig=WEqVvH4KyGMGiFNJ1LwErUfUTGmKj9hst4NbcmV2Olo%3D" --parameters "./override_parameters/ARMTemplateParametersForFactory_DEV.json"
 
-      # # 9. Upload template to Blob Storage
-      # - name: Upload Linked Templates to Storage Account
-      #   run: |
-      #     az storage blob upload --overwrite \
-      #       --account-name "datalake31052025" \
-      #       --container-name "xyz" \
-      #       --name "ARMTemplateForFactory.json" \
-      #       --file "./arm-template/ARMTemplateForFactory.json" \
-      #       --auth-mode login
+      # 9. Upload template to Blob Storage
+      - name: Upload Linked Templates to Storage Account
+        run: |
+          az storage blob upload --overwrite \
+            --account-name "datalake31052025" \
+            --container-name "xyz" \
+            --name "ARMTemplateForFactory.json" \
+            --file "./arm-template/ARMTemplateForFactory.json" \
+            --auth-mode login
 
-      # # 10. Generate Blob-level SAS Token
-      # - name: Generate SAS Token
-      #   id: generate_sas
-      #   run: |
-      #     STORAGE_ACCOUNT_NAME="datalake31052025"
-      #     CONTAINER_NAME="data"
-      #     BLOB_NAME="ARMTemplateForFactory.json"
+      # 10. Generate Blob-level SAS Token
+      - name: Generate SAS Token
+        id: generate_sas
+        run: |
+          STORAGE_ACCOUNT_NAME="datalake31052025"
+          CONTAINER_NAME="data"
+          BLOB_NAME="ARMTemplateForFactory.json"
 
-      #     START=$(date -u -d "15 minutes ago" '+%Y-%m-%dT%H:%MZ')
-      #     EXPIRY=$(date -u -d "2 hours" '+%Y-%m-%dT%H:%MZ')
+          START=$(date -u -d "15 minutes ago" '+%Y-%m-%dT%H:%MZ')
+          EXPIRY=$(date -u -d "2 hours" '+%Y-%m-%dT%H:%MZ')
 
-      #     SAS_TOKEN=$(az storage blob generate-sas \
-      #       --account-name $STORAGE_ACCOUNT_NAME \
-      #       --container-name $CONTAINER_NAME \
-      #       --name $BLOB_NAME \
-      #       --permissions r \
-      #       --start $START \
-      #       --expiry $EXPIRY \
-      #       --auth-mode login \
-      #       --as-user \
-      #       --output tsv)
+          SAS_TOKEN=$(az storage blob generate-sas \
+            --account-name $STORAGE_ACCOUNT_NAME \
+            --container-name $CONTAINER_NAME \
+            --name $BLOB_NAME \
+            --permissions r \
+            --start $START \
+            --expiry $EXPIRY \
+            --auth-mode login \
+            --as-user \
+            --https-only
+            --output tsv)
 
-      #     echo "sas_token=$SAS_TOKEN" >> $GITHUB_OUTPUT
+          echo "sas_token=$SAS_TOKEN" >> $GITHUB_OUTPUT
 
-      # # 11. Verify template is downloadable
-      # - name: Verify template download
-      #   run: |
-      #     curl -I "https://datalake31052025.blob.core.windows.net/xyz/ARMTemplateForFactory.json?${{ steps.generate_sas.outputs.sas_token }}"
+      # 11. Verify template is downloadable
+      - name: Verify template download
+        run: |
+          curl -I "https://datalake31052025.blob.core.windows.net/xyz/ARMTemplateForFactory.json?${{ steps.generate_sas.outputs.sas_token }}"
 
       # 12. Deploy ARM template from Blob Storage
       # - name: Deployment ARM template from Blob Storage
@@ -113,3 +110,9 @@ jobs:
       #     az deployment group create \
       #       --resource-group "Ravi_RG" \
       #       --template-uri "https://datalake31052025.blob.core.windows.net/xyz/ARMTemplateForFactory.json?sp=racwdymeop&st=2025-08-25T15:42:24Z&se=2025-08-26T23:57:24Z&spr=https&sv=2024-11-04&sr=b&sig=mLF3VrM4nyTasjFOnsFEWSogg8IA9gKHumu0SG%2FyGx8%3D"
+
+
+        # 12. Deploy ARM template from Blob Storage
+      - name: Deployment ARM template from Blob Storage
+        run: | 
+          az deployment group create --resource-group Ravi_RG --template-uri "https://datalake31052025.blob.core.windows.net/xyz/ARMTemplateForFactory.json?{{ steps.generate_sas.outputs.sas_token }}" --parameters "./override_parameters/ARMTemplateParametersForFactory_DEV.json"
