@@ -70,6 +70,7 @@ jobs:
           enable-AzPSSession: true
       
       - name: Generate SAS Token
+        id: generate_sas
         run: |
           STORAGE_ACCOUNT_NAME="datalake31052025"
           CONTAINER_NAME="data"
