@@ -1,0 +1,37 @@
+name: Google_login_for_sas
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    name: Login
+    runs-on: ubuntu-latest
+    environment: dev    
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1.4.6
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+
+      - name: Generate SAS Token
+        run: |
+          STORAGE_ACCOUNT_NAME="yourstorageaccount"
+          CONTAINER_NAME="yourcontainer"
+          EXPIRY=$(date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ')
+
+          SAS_TOKEN=$(az storage container generate-sas \
+            --account-name $STORAGE_ACCOUNT_NAME \
+            --name $CONTAINER_NAME \
+            --permissions rwl \
+            --expiry $EXPIRY \
+            --auth-mode login \
+            --as-user \
+            --output tsv)
+
+          echo "SAS Token: $SAS_TOKEN"
