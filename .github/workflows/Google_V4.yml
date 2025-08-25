@@ -83,7 +83,7 @@ jobs:
             --auth-mode login \
             --as-user \
             --output tsv)
-
+          echo "sas_token=$SAS_TOKEN" >> $GITHUB_OUTPUT
       - name: Upload Linked Templates to Storage Account
         run: |
           az storage blob upload --overwrite \
@@ -91,7 +91,7 @@ jobs:
             --container-name "data" \
             --name "ARMTemplateForFactory.json" \
             --file "./arm-template/ARMTemplateForFactory.json" \
-            --sas-token $SAS_TOKEN
+            --sas-token "$SAS_TOKEN"
 
       - name: Deployment ARM template from Blob Storage        
         run: |
