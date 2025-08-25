@@ -1,0 +1,146 @@
+name: Google_V4
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    name: Build ADF Template
+    runs-on: ubuntu-latest
+    environment: dev    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+
+      - name: Install npm packages
+        working-directory: ADF_Pipeline/Ingestion/build
+        run: npm install
+
+      - name: Validate ADF resources
+        working-directory: ADF_Pipeline/Ingestion/build
+        run: |
+          npm run build validate ../../Ingestion \
+            --resource-id "/subscriptions/3915c783-2b04-4f6f-94d4-8d3ac1d3deb5/resourceGroups/Ravi_RG/providers/Microsoft.DataFactory/factories/practiceadf20252025"
+
+      - name: Export ADF ARM template
+        working-directory: ADF_Pipeline/Ingestion/build
+        run: |
+          npm run build export ../../Ingestion \
+            --resource-id "/subscriptions/3915c783-2b04-4f6f-94d4-8d3ac1d3deb5/resourceGroups/Ravi_RG/providers/Microsoft.DataFactory/factories/practiceadf20252025" ExportedArmTemplate
+
+      - name: Upload ARM template artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ExportedArmTemplate
+          path: ADF_Pipeline/Ingestion/build/ExportedArmTemplate
+
+      - name: Download ARM template artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ExportedArmTemplate
+          path: ./arm-template
+
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   environment: dev    
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
+
+  #     - name: Download ARM template artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: ExportedArmTemplate
+  #         path: ./arm-template
+
+      - name: Azure Login
+        uses: azure/login@v1.4.6
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+      
+      - name: Generate SAS Token
+        id: generate_sas
+        run: |
+          EXPIRY=$(date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ')
+          SAS_TOKEN=$(az storage container generate-sas \
+            --account-name "datalake31052025" \
+            --container-name "data" \
+            --permissions rl \
+            --expiry $EXPIRY \
+            --output tsv)
+          echo "sas_token=$SAS_TOKEN" >> $GITHUB_OUTPUT
+
+      - name: Upload Linked Templates to Storage Account
+        run: |
+          az storage blob upload --overwrite \
+            --account-name "datalake31052025" \
+            --container-name "data" \
+            --name "ARMTemplateForFactory.json" \
+            --file "./adf_dir/arm-template/ARMTemplateForFactory.json" \
+            --sas-token "${{ steps.generate_sas.outputs.sas_token }}"
+
+      - name: Deployment ARM template from Blob Storage        
+        run: |
+          az deployment group create \
+          --resource-group "Ravi_RG" \
+          --template-uri "https://datalake31052025.blob.core.windows.net/data/adf_dir/ARMTemplateForFactory.json?sp=racwdlmeop&st=2025-08-21T06:03:21Z&se=2025-08-21T14:18:21Z&spr=https&sv=2024-11-04&sr=c&sig=Kvyrlqsgvfh3aGJf%2F5LWqg0cMB9TLn9AijGCczCAaYE%3D"
+
+
+      # - name: Deployment ARM template from Blob Storage
+      #   run: |
+      #     az deployment group create \
+      #       --resource-group "Ravi_RG" \      
+      #       --template-uri "https://datalake31052025.blob.core.windows.net/xyz/ARMTemplateForFactory.json?sp=racwdlmeop&st=2025-08-21T06:03:21Z&se=2025-08-21T14:18:21Z&spr=https&sv=2024-11-04&sr=c&sig=Kvyrlqsgvfh3aGJf%2F5LWqg0cMB9TLn9AijGCczCAaYE%3D"
+      
+      #--parameters "@./override_parameters/ARMTemplateParametersForFactory_DEV.json"
+
+      # - name: Deploy Linked ARM Template
+      #   uses: azure/arm-deploy@v2
+      #   with:
+      #     subscriptionId: "3915c783-2b04-4f6f-94d4-8d3ac1d3deb5"
+      #     resourceGroupName: "Ravi_RG"
+      #     #template: "./linkedTemplates/ArmTemplate_master.json"
+      #     template: "https://datalake31052025.blob.core.windows.net/xyz/ArmTemplateParameters_master.json"
+      #     #parameters: "./override_parameters/ARMTemplateParametersForFactory_DEV.json"
+      #     #parameters-override: |
+      #     parameters: >
+      #       containerUri="https://datalake31052025.blob.core.windows.net/xyz"
+      #       containerSasToken="sp=r&st=2025-08-17T15:38:23Z&se=2025-08-17T23:53:23Z&spr=https&sv=2024-11-04&sr=c&sig=dtxI%2F%2FXiUM%2BVCw97Z%2FGGDx%2B8HcEf1qa%2BhNu3cMdphwc%3D"
+
+      # - name: Deploy Data Factory ARM template
+      #   uses: Azure/data-factory-deploy-action@v1.2.0
+      #   with:
+      #     resourceGroupName: "Ravi_RG"
+      #     dataFactoryName: "practiceadf20252025"
+      #     armTemplateFile: "./linkedTemplates/ArmTemplate_master.json"
+      #     armTemplateParametersFile: "./linkedTemplates/ArmTemplateParameters_master.json"
+          #additionalParameters: -factoryName practiceadf20252025  # Required by ADF ARM deployment
+          
+      # - name: Deploy Data Factory linked ARM templates
+      #   uses: Azure/arm-deploy@v1
+      #   with:
+      #     template: "https://datalake31052025.blob.core.windows.net/xyz/ArmTemplateParameters_master.json"
+      #     parameters: >
+      #       factoryName="practiceadf20252025"
+      #       containerURI="https://datalake31052025.blob.core.windows.net/xyz"
+      #       containerSasToken="?sp=r&st=2025-08-17T15:38:23Z&se=2025-08-17T23:53:23Z&spr=https&sv=2024-11-04&sr=c&sig=dtxI%2F%2FXiUM%2BVCw97Z%2FGGDx%2B8HcEf1qa%2BhNu3cMdphwc%3D"
+      #     deploymentName: Deploy-ADF-LinkedTemplates
+      #     resourceGroupName: "Ravi_RG"
+
+      # - name: Deploy Main ARM Template
+      #   uses: azure/arm-deploy@v1
+      #   with:
+      #     resourceGroupName: datalake31052025
+      #     template: ./main-template.json
+      #     parameters: linkedTemplateUri='https://datalake31052025.blob.core.windows.net/templates/linked-template.json?${{ env.SAS_TOKEN }}'
