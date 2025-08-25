@@ -1,0 +1,87 @@
+name: Google_V5
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    name: Build ADF Template
+    runs-on: ubuntu-latest
+    environment: dev    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+
+      - name: Install npm packages
+        working-directory: ADF_Pipeline/Ingestion/build
+        run: npm install
+
+      - name: Validate ADF resources
+        working-directory: ADF_Pipeline/Ingestion/build
+        run: |
+          npm run build validate ../../Ingestion \
+            --resource-id "/subscriptions/3915c783-2b04-4f6f-94d4-8d3ac1d3deb5/resourceGroups/Ravi_RG/providers/Microsoft.DataFactory/factories/practiceadf20252025"
+
+      - name: Export ADF ARM template
+        working-directory: ADF_Pipeline/Ingestion/build
+        run: |
+          npm run build export ../../Ingestion \
+            --resource-id "/subscriptions/3915c783-2b04-4f6f-94d4-8d3ac1d3deb5/resourceGroups/Ravi_RG/providers/Microsoft.DataFactory/factories/practiceadf20252025" ExportedArmTemplate
+
+      - name: Upload ARM template artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ExportedArmTemplate
+          path: ADF_Pipeline/Ingestion/build/ExportedArmTemplate
+
+      - name: Download ARM template artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ExportedArmTemplate
+          path: ./arm-template
+
+      - name: Azure Login
+        uses: azure/login@v1.4.6
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+      
+      - name: Generate SAS Token
+        id: generate_sas
+        run: |
+          STORAGE_ACCOUNT_NAME="datalake31052025"
+          CONTAINER_NAME="data"
+          EXPIRY=$(date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ')
+
+          SAS_TOKEN=$(az storage container generate-sas \
+            --account-name $STORAGE_ACCOUNT_NAME \
+            --name $CONTAINER_NAME \
+            --permissions rwl \
+            --expiry $EXPIRY \
+            --auth-mode login \
+            --as-user \
+            --output tsv)
+          echo "sas_token=$SAS_TOKEN" >> $GITHUB_OUTPUT
+      - name: Upload Linked Templates to Storage Account
+        run: |
+          az storage blob upload --overwrite \
+            --account-name "datalake31052025" \
+            --container-name "data" \
+            --name "ARMTemplateForFactory.json" \
+            --file "./arm-template/ARMTemplateForFactory.json" \
+            --auth-mode login
+        
+      - name: Deployment ARM template from Blob Storage        
+        run: |
+          az deployment group create \
+          --resource-group "Ravi_RG" \
+          --template-uri "https://datalake31052025.blob.core.windows.net/data/ARMTemplateForFactory.json?${{ steps.generate_sas.outputs.sas_token }}"
