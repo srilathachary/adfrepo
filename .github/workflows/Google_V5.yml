@@ -55,22 +55,44 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           enable-AzPSSession: true
       
+      # - name: Generate SAS Token
+      #   id: generate_sas
+      #   run: |
+      #     STORAGE_ACCOUNT_NAME="datalake31052025"
+      #     CONTAINER_NAME="data"
+      #     EXPIRY=$(date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ')
+
+      #     SAS_TOKEN=$(az storage container generate-sas \
+      #       --account-name $STORAGE_ACCOUNT_NAME \
+      #       --name $CONTAINER_NAME \
+      #       --permissions rwl \
+      #       --expiry $EXPIRY \
+      #       --auth-mode login \
+      #       --as-user \
+      #       --output tsv)
+      #     echo "sas_token=$SAS_TOKEN" >> $GITHUB_OUTPUT
+
       - name: Generate SAS Token
         id: generate_sas
         run: |
           STORAGE_ACCOUNT_NAME="datalake31052025"
           CONTAINER_NAME="data"
-          EXPIRY=$(date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ')
+          BLOB_NAME="ARMTemplateForFactory.json"
+          EXPIRY=$(date -u -d "1 hour" '+%Y-%m-%dT%H:%MZ')
 
-          SAS_TOKEN=$(az storage container generate-sas \
-            --account-name $STORAGE_ACCOUNT_NAME \
-            --name $CONTAINER_NAME \
-            --permissions rwl \
-            --expiry $EXPIRY \
-            --auth-mode login \
-            --as-user \
-            --output tsv)
-          echo "sas_token=$SAS_TOKEN" >> $GITHUB_OUTPUT
+          SAS_TOKEN=$(az storage blob generate-sas \
+          --account-name $STORAGE_ACCOUNT_NAME \
+          --container-name $CONTAINER_NAME \
+          --name $BLOB_NAME \
+          --permissions r \
+          --expiry $EXPIRY \
+          --auth-mode login \
+          --as-user \
+          --output tsv)
+
+    echo "sas_token=$SAS_TOKEN" >> $GITHUB_OUTPUT
+
+
       - name: Upload Linked Templates to Storage Account
         run: |
           az storage blob upload --overwrite \
