@@ -102,14 +102,14 @@ jobs:
       # 11. Verify template is downloadable
       - name: Verify template download
         run: |
-          curl -I "https://datalake31052025.blob.core.windows.net/xyz/ARMTemplateForFactory.json?${{ steps.generate_sas.outputs.sas_token }}"
+          curl -I "https://datalake31052025.blob.core.windows.net/data/ARMTemplateForFactory.json?${{ steps.generate_sas.outputs.sas_token }}"
 
       - name: Deployment ARM template from Blob Storage
         run: |
           SAS_TOKEN=${{ steps.generate_sas.outputs.sas_token }}
           az deployment group create \
             --resource-group Ravi_RG \
-            --template-uri "https://datalake31052025.blob.core.windows.net/xyz/ARMTemplateForFactory.json?$SAS_TOKEN" \
+            --template-uri "https://datalake31052025.blob.core.windows.net/data/ARMTemplateForFactory.json?$SAS_TOKEN" \
             --parameters "./override_parameters/ARMTemplateParametersForFactory_DEV.json" \
             --debug
       # 12. Deploy ARM template from Blob Storage
