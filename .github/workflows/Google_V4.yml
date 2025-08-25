@@ -75,7 +75,7 @@ jobs:
           EXPIRY=$(date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ')
           SAS_TOKEN=$(az storage container generate-sas \
             --account-name "datalake31052025" \
-            --container-name "data" \
+            --name "data" \
             --permissions rl \
             --expiry $EXPIRY \
             --output tsv)
