@@ -70,18 +70,19 @@ jobs:
           enable-AzPSSession: true
       
       - name: Generate SAS Token
-        id: generate_sas
         run: |
+          STORAGE_ACCOUNT_NAME="yourstorageaccount"
+          CONTAINER_NAME="yourcontainer"
           EXPIRY=$(date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ')
+
           SAS_TOKEN=$(az storage container generate-sas \
-            --account-name "datalake31052025" \
-            --name "data" \
-            --permissions rl \
+            --account-name $STORAGE_ACCOUNT_NAME \
+            --name $CONTAINER_NAME \
+            --permissions rwl \
             --expiry $EXPIRY \
             --auth-mode login \
             --as-user \
             --output tsv)
-          echo "sas_token=$SAS_TOKEN" >> $GITHUB_OUTPUT
 
       - name: Upload Linked Templates to Storage Account
         run: |
@@ -90,7 +91,7 @@ jobs:
             --container-name "data" \
             --name "ARMTemplateForFactory.json" \
             --file "./adf_dir/arm-template/ARMTemplateForFactory.json" \
-            --sas-token "${{ steps.generate_sas.outputs.sas_token }}"
+            --sas-token "$SAS_TOKEN"
 
       - name: Deployment ARM template from Blob Storage        
         run: |
