@@ -90,7 +90,7 @@ jobs:
           --as-user \
           --output tsv)
 
-    echo "sas_token=$SAS_TOKEN" >> $GITHUB_OUTPUT
+          echo "sas_token=$SAS_TOKEN" >> $GITHUB_OUTPUT
 
 
       - name: Upload Linked Templates to Storage Account
