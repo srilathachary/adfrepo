@@ -91,8 +91,7 @@ jobs:
             --container-name "data" \
             --name "ARMTemplateForFactory.json" \
             --file "./arm-template/ARMTemplateForFactory.json" \
-            --sas-token "$SAS_TOKEN"
-
+            --auth-mode login
       - name: Deployment ARM template from Blob Storage        
         run: |
           az deployment group create \
