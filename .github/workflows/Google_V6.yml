@@ -94,7 +94,7 @@ jobs:
             --expiry $EXPIRY \
             --auth-mode login \
             --as-user \
-            --https-only
+            --https-only \
             --output tsv)
 
           echo "sas_token=$SAS_TOKEN" >> $GITHUB_OUTPUT
