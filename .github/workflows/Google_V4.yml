@@ -90,7 +90,7 @@ jobs:
             --account-name "datalake31052025" \
             --container-name "data" \
             --name "ARMTemplateForFactory.json" \
-            --file "./adf_dir/arm-template/ARMTemplateForFactory.json" \
+            --file "./arm-template/ARMTemplateForFactory.json" \
             --sas-token "$SAS_TOKEN"
 
       - name: Deployment ARM template from Blob Storage        
