@@ -71,8 +71,8 @@ jobs:
       
       - name: Generate SAS Token
         run: |
-          STORAGE_ACCOUNT_NAME="yourstorageaccount"
-          CONTAINER_NAME="yourcontainer"
+          STORAGE_ACCOUNT_NAME="datalake31052025"
+          CONTAINER_NAME="data"
           EXPIRY=$(date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ')
 
           SAS_TOKEN=$(az storage container generate-sas \
