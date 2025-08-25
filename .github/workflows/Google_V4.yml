@@ -97,7 +97,7 @@ jobs:
         run: |
           az deployment group create \
           --resource-group "Ravi_RG" \
-          --template-uri "https://datalake31052025.blob.core.windows.net/data/ARMTemplateForFactory.json?$SAS_TOKEN"
+          --template-uri "https://datalake31052025.blob.core.windows.net/data/ARMTemplateForFactory.json?${{ steps.generate_sas.outputs.sas_token }}"
 
 
 
