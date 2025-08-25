@@ -64,48 +64,48 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           enable-AzPSSession: true
 
-      # 9. Upload template to Blob Storage
-      - name: Upload Linked Templates to Storage Account
-        run: |
-          az storage blob upload --overwrite \
-            --account-name "datalake31052025" \
-            --container-name "data" \
-            --name "ARMTemplateForFactory.json" \
-            --file "./arm-template/ARMTemplateForFactory.json" \
-            --auth-mode login
+      # # 9. Upload template to Blob Storage
+      # - name: Upload Linked Templates to Storage Account
+      #   run: |
+      #     az storage blob upload --overwrite \
+      #       --account-name "datalake31052025" \
+      #       --container-name "data" \
+      #       --name "ARMTemplateForFactory.json" \
+      #       --file "./arm-template/ARMTemplateForFactory.json" \
+      #       --auth-mode login
 
-      # 10. Generate Blob-level SAS Token
-      - name: Generate SAS Token
-        id: generate_sas
-        run: |
-          STORAGE_ACCOUNT_NAME="datalake31052025"
-          CONTAINER_NAME="data"
-          BLOB_NAME="ARMTemplateForFactory.json"
+      # # 10. Generate Blob-level SAS Token
+      # - name: Generate SAS Token
+      #   id: generate_sas
+      #   run: |
+      #     STORAGE_ACCOUNT_NAME="datalake31052025"
+      #     CONTAINER_NAME="data"
+      #     BLOB_NAME="ARMTemplateForFactory.json"
 
-          START=$(date -u -d "15 minutes ago" '+%Y-%m-%dT%H:%MZ')
-          EXPIRY=$(date -u -d "2 hours" '+%Y-%m-%dT%H:%MZ')
+      #     START=$(date -u -d "15 minutes ago" '+%Y-%m-%dT%H:%MZ')
+      #     EXPIRY=$(date -u -d "2 hours" '+%Y-%m-%dT%H:%MZ')
 
-          SAS_TOKEN=$(az storage blob generate-sas \
-            --account-name $STORAGE_ACCOUNT_NAME \
-            --container-name $CONTAINER_NAME \
-            --name $BLOB_NAME \
-            --permissions r \
-            --start $START \
-            --expiry $EXPIRY \
-            --auth-mode login \
-            --as-user \
-            --output tsv)
+      #     SAS_TOKEN=$(az storage blob generate-sas \
+      #       --account-name $STORAGE_ACCOUNT_NAME \
+      #       --container-name $CONTAINER_NAME \
+      #       --name $BLOB_NAME \
+      #       --permissions r \
+      #       --start $START \
+      #       --expiry $EXPIRY \
+      #       --auth-mode login \
+      #       --as-user \
+      #       --output tsv)
 
-          echo "sas_token=$SAS_TOKEN" >> $GITHUB_OUTPUT
+      #     echo "sas_token=$SAS_TOKEN" >> $GITHUB_OUTPUT
 
-      # 11. Verify template is downloadable
-      - name: Verify template download
-        run: |
-          curl -I "https://datalake31052025.blob.core.windows.net/data/ARMTemplateForFactory.json?${{ steps.generate_sas.outputs.sas_token }}"
+      # # 11. Verify template is downloadable
+      # - name: Verify template download
+      #   run: |
+      #     curl -I "https://datalake31052025.blob.core.windows.net/data/ARMTemplateForFactory.json?${{ steps.generate_sas.outputs.sas_token }}"
 
       # 12. Deploy ARM template from Blob Storage
       - name: Deployment ARM template from Blob Storage
         run: |
           az deployment group create \
             --resource-group "Ravi_RG" \
-            --template-uri "https://datalake31052025.blob.core.windows.net/data/ARMTemplateForFactory.json?sp=racwde&st=2025-08-25T13:21:20Z&se=2025-08-25T21:36:20Z&spr=https&sv=2024-11-04&sr=b&sig=wk3eNOovo%2BehHdfgAsJWr8JE6Pt15XjFmhh8DFIiyMk%3D"
+            --template-uri "https://datalake31052025.blob.core.windows.net/data/ARMTemplateForFactory.json?sp=racwde&st=2025-08-25T13:27:42Z&se=2025-08-25T21:42:42Z&spr=https&sv=2024-11-04&sr=b&sig=usVSaz%2B%2FwVY9ZJxwMfQOx3I%2Bjh12tQ%2B2vv2IColj2wk%3D"
