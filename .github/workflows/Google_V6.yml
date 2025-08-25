@@ -105,9 +105,10 @@ jobs:
           curl -I "https://datalake31052025.blob.core.windows.net/data/ARMTemplateForFactory.json?${{ steps.generate_sas.outputs.sas_token }}"
 
       - name: Deployment ARM template from Blob Storage
-        run: |
+        env:
           SAS_TOKEN=${{ steps.generate_sas.outputs.sas_token }}
-
+        run: |
+          echo "Resolved SAS: $SAS_TOKEN"
           echo "Template URI: https://datalake31052025.blob.core.windows.net/data/ARMTemplateForFactory.json?$SAS_TOKEN"
 
           az deployment group create \
