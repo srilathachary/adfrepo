@@ -78,6 +78,7 @@ jobs:
             --name "data" \
             --permissions rl \
             --expiry $EXPIRY \
+            --auth-mode login \
             --output tsv)
           echo "sas_token=$SAS_TOKEN" >> $GITHUB_OUTPUT
 
