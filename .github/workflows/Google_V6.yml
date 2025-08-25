@@ -66,7 +66,7 @@ jobs:
       # 12. Deploy ARM template from Blob Storage
       - name: Deployment ARM template from Blob Storage
         run: | 
-          az deployment group create --resource-group Ravi_RG --template-uri "https://datalake31052025.blob.core.windows.net/xyz/ARMTemplateForFactory.json?se=2025-08-27T23%3A59%3A59Z&sp=r&spr=https&sv=2022-11-02&sr=b&sig=WEqVvH4KyGMGiFNJ1LwErUfUTGmKj9hst4NbcmV2Olo%3D" --parameters ARMTemplateParametersForFactory.json
+          az deployment group create --resource-group Ravi_RG --template-uri "https://datalake31052025.blob.core.windows.net/xyz/ARMTemplateForFactory.json?se=2025-08-27T23%3A59%3A59Z&sp=r&spr=https&sv=2022-11-02&sr=b&sig=WEqVvH4KyGMGiFNJ1LwErUfUTGmKj9hst4NbcmV2Olo%3D" --parameters "./override_parameters/ARMTemplateParametersForFactory_DEV.json"
 
       # # 9. Upload template to Blob Storage
       # - name: Upload Linked Templates to Storage Account
