@@ -69,7 +69,7 @@ jobs:
         run: |
           az storage blob upload --overwrite \
             --account-name "datalake31052025" \
-            --container-name "xyz" \
+            --container-name "data" \
             --name "ARMTemplateForFactory.json" \
             --file "./arm-template/ARMTemplateForFactory.json" \
             --auth-mode login
