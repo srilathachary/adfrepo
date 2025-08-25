@@ -94,6 +94,7 @@ jobs:
             --auth-mode login
       - name: Deployment ARM template from Blob Storage        
         run: |
+          echo "https://datalake31052025.blob.core.windows.net/data/ARMTemplateForFactory.json?${SAS_TOKEN}"
           az deployment group create \
           --resource-group "Ravi_RG" \
           --template-uri "https://datalake31052025.blob.core.windows.net/data/ARMTemplateForFactory.json?${SAS_TOKEN}"
