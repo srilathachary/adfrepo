@@ -107,7 +107,7 @@ jobs:
             --auth-mode login \
             --container-name $CONTAINER \
             --file ./arm-template/ARMTemplateParametersForFactory.json \
-            --name ARMTemplateParametersForFactor.json \
+            --name ARMTemplateParametersForFactory.json \
             --overwrite
 
       # 4. Generate SAS for templates + params using user delegation
@@ -129,13 +129,11 @@ jobs:
           echo "template_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ARMTemplateForFactory.json?$TEMPLATE_SAS" >> $GITHUB_OUTPUT
           echo "params_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ARMTemplateParametersForFactory.json?$PARAMS_SAS" >> $GITHUB_OUTPUT
 
-      - name: Sleep for 1 minute
-        run: sleep 60s
-        shell: bash
+
       # 5. Deploy ADF
       - name: Deploy ARM template
         run: |
           az deployment group create \
             --resource-group Ravi_RG \
             --template-uri "${{ steps.sas.outputs.template_uri }}"
-            --parameters @./arm-template/ARMTemplateForFactory.json
+            --parameters @./arm-template/ARMTemplateParametersForFactory.json
