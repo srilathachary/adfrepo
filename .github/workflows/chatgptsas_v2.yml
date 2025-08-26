@@ -92,6 +92,15 @@ jobs:
             --account-name $STORAGE_ACCOUNT \
             --auth-mode login
 
+          # Upload ARM Template (overwrite existing)
+          az storage blob upload \
+            --account-name $STORAGE_ACCOUNT \
+            --auth-mode login \
+            --container-name $CONTAINER \
+            --file ./arm-template/ARMTemplateForFactory.json \
+            --name ARMTemplateForFactory.json \
+            --overwrite
+
           # Upload override parameters (overwrite existing)
           az storage blob upload \
             --account-name $STORAGE_ACCOUNT \
