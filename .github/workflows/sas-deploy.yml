@@ -1,4 +1,4 @@
-name: SAS and Deploy
+name: Deploy ADF ARM Template
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: dev
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -16,29 +16,34 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Generate SAS and Deploy
+      - name: Generate Blob SAS and Deploy
         run: |
+          # Variables
           STORAGE_ACCOUNT="datalake31052025"
           CONTAINER="data"
           BLOB="ARMTemplateForFactory.json"
           RESOURCE_GROUP="Ravi_RG"
-          EXPIRY="2025-08-27T12:00:00Z"
+          EXPIRY="$(date -u -d '1 hour' +%Y-%m-%dT%H:%MZ)"   # valid for 1 hour
 
-          SAS_TOKEN=$(az storage blob generate-sas \
+          echo "Generating SAS for blob: $BLOB"
+
+          # Generate a **blob-level SAS** (read-only)
+          SAS=$(az storage blob generate-sas \
             --account-name $STORAGE_ACCOUNT \
             --container-name $CONTAINER \
             --name $BLOB \
             --permissions r \
             --expiry $EXPIRY \
-            --auth-mode login \
-            --as-user \
+            --auth-mode key \
             --output tsv)
 
-          BLOB_URL="https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/$BLOB?$SAS_TOKEN"
+          # Build the full URL
+          TEMPLATE_URI="https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/$BLOB?$SAS"
 
-          echo "Using template: $BLOB_URL"
+          echo "Deploying ARM template from: $TEMPLATE_URI"
 
+          # Run the deployment
           az deployment group create \
             --resource-group $RESOURCE_GROUP \
-            --template-uri "$BLOB_URL" \
+            --template-uri "$TEMPLATE_URI" \
             --parameters "@./override_parameters/ARMTemplateParametersForFactory_DEV.json"
