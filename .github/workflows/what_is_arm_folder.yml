@@ -1,0 +1,20 @@
+name: Gwhat_is_arm_folder
+on:
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      # 1. Checkout repo
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: List files in the root directory
+        run: ls -la arm_templates_folder
