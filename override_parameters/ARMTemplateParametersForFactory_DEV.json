@@ -9,7 +9,7 @@
             "value": "https://datalake31052025.dfs.core.windows.net/"
         },
         "default_properties_g_param_1_value": {
-            "value": "main"
+            "value": "main_1"
         },
         "default_properties_g_param_2_value": {
             "value": "main"
@@ -21,7 +21,7 @@
             "value": "main"
         },
         "default_properties_g_param_5_value": {
-            "value": "main"
+            "value": "main_5"
         }
     }
 }
