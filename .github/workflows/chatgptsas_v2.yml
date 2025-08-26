@@ -64,60 +64,63 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           enable-AzPSSession: true
 
-      # 3. Upload linked templates + parameters
-      - name: Upload ARM artifacts
-        run: |
-          STORAGE_ACCOUNT="datalake31052025"
-          CONTAINER="adf-artifacts"
+      - name: List files in the root directory
+        run: ls -la ./arm-template
 
-          # Create container if not exists
-          az storage container create \
-            --name $CONTAINER \
-            --account-name $STORAGE_ACCOUNT \
-            --auth-mode login
+      # # 3. Upload linked templates + parameters
+      # - name: Upload ARM artifacts
+      #   run: |
+      #     STORAGE_ACCOUNT="datalake31052025"
+      #     CONTAINER="adf-artifacts"
 
-          # Upload ARM Template (overwrite existing)
-          az storage blob upload \
-            --account-name $STORAGE_ACCOUNT \
-            --auth-mode login \
-            --container-name $CONTAINER \
-            --file ./arm-template/ARMTemplateForFactory.json \
-            --name ARMTemplateForFactory.json \
-            --overwrite
+      #     # Create container if not exists
+      #     az storage container create \
+      #       --name $CONTAINER \
+      #       --account-name $STORAGE_ACCOUNT \
+      #       --auth-mode login
 
-          # Upload override parameters (overwrite existing)
-          az storage blob upload \
-            --account-name $STORAGE_ACCOUNT \
-            --auth-mode login \
-            --container-name $CONTAINER \
-            --file ./arm-template/ARMTemplateParametersForFactory.json \
-            --name ARMTemplateParametersForFactory.json \
-            --overwrite
+      #     # Upload ARM Template (overwrite existing)
+      #     az storage blob upload \
+      #       --account-name $STORAGE_ACCOUNT \
+      #       --auth-mode login \
+      #       --container-name $CONTAINER \
+      #       --file ./arm-template/ARMTemplateForFactory.json \
+      #       --name ARMTemplateForFactory.json \
+      #       --overwrite
 
-      # 4. Generate SAS for templates + params using user delegation
-      - name: Generate SAS URIs
-        id: sas
-        run: |
-          STORAGE_ACCOUNT="datalake31052025"
-          CONTAINER="adf-artifacts"
-          EXPIRY=$(date -u -d "1 hour" '+%Y-%m-%dT%H:%MZ')
-          TEMPLATE_SAS=$(az storage blob generate-sas \
-            --account-name $STORAGE_ACCOUNT \
-            --container-name $CONTAINER \
-            --name ARMTemplateForFactory.json \
-            --permissions r \
-            --expiry $EXPIRY \
-            --as-user \
-            --auth-mode login -o tsv)
+      #     # Upload override parameters (overwrite existing)
+      #     az storage blob upload \
+      #       --account-name $STORAGE_ACCOUNT \
+      #       --auth-mode login \
+      #       --container-name $CONTAINER \
+      #       --file ./arm-template/ARMTemplateParametersForFactory.json \
+      #       --name ARMTemplateParametersForFactory.json \
+      #       --overwrite
 
-          echo "template_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ARMTemplateForFactory.json?$TEMPLATE_SAS" >> $GITHUB_OUTPUT
-          echo "params_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ARMTemplateParametersForFactory.json?$PARAMS_SAS" >> $GITHUB_OUTPUT
+      # # 4. Generate SAS for templates + params using user delegation
+      # - name: Generate SAS URIs
+      #   id: sas
+      #   run: |
+      #     STORAGE_ACCOUNT="datalake31052025"
+      #     CONTAINER="adf-artifacts"
+      #     EXPIRY=$(date -u -d "1 hour" '+%Y-%m-%dT%H:%MZ')
+      #     TEMPLATE_SAS=$(az storage blob generate-sas \
+      #       --account-name $STORAGE_ACCOUNT \
+      #       --container-name $CONTAINER \
+      #       --name ARMTemplateForFactory.json \
+      #       --permissions r \
+      #       --expiry $EXPIRY \
+      #       --as-user \
+      #       --auth-mode login -o tsv)
+
+      #     echo "template_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ARMTemplateForFactory.json?$TEMPLATE_SAS" >> $GITHUB_OUTPUT
+      #     echo "params_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ARMTemplateParametersForFactory.json?$PARAMS_SAS" >> $GITHUB_OUTPUT
 
 
-      # 5. Deploy ADF
-      - name: Deploy ARM template
-        run: |
-          az deployment group create \
-            --resource-group Ravi_RG \
-            --template-uri "${{ steps.sas.outputs.template_uri }}"
-            --parameters @./arm-template/ARMTemplateParametersForFactory.json
+      # # 5. Deploy ADF
+      # - name: Deploy ARM template
+      #   run: |
+      #     az deployment group create \
+      #       --resource-group Ravi_RG \
+      #       --template-uri "${{ steps.sas.outputs.template_uri }}"
+      #       --parameters @./arm-template/ARMTemplateParametersForFactory.json
