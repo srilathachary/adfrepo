@@ -128,4 +128,4 @@ jobs:
           az deployment group create \
             --resource-group Ravi_RG \
             --template-uri "${{ steps.sas.outputs.template_uri }}"
-            --parameters "./arm-template/ARMTemplateForFactory.json"
+            --parameters @./arm-template/ARMTemplateForFactory.json
