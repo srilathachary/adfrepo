@@ -32,7 +32,7 @@ jobs:
             --auth-mode login
 
           # Upload linked templates
-          az storage blob upload-batch \
+          az storage blob upload-batch --overwrite \
             --account-name $STORAGE_ACCOUNT \
             --auth-mode login \
             --destination $CONTAINER \
