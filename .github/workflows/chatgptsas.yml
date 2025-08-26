@@ -39,7 +39,7 @@ jobs:
             --source linkedTemplates
 
           # Upload override parameters
-          az storage blob upload \
+          az storage blob upload --overwrite \
             --account-name $STORAGE_ACCOUNT \
             --auth-mode login \
             --container-name $CONTAINER \
