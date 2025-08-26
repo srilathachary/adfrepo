@@ -50,7 +50,7 @@ jobs:
       - name: Generate SAS token
         id: sas
         run: |
-          STORAGE_ACCOUNT="<yourstorageacct>"
+          STORAGE_ACCOUNT="datalake31052025"
           CONTAINER="adf-artifacts"
 
           SAS=$(az storage container generate-sas \
@@ -66,7 +66,7 @@ jobs:
       # 4. Deploy ADF ARM template
       - name: Deploy ARM template
         run: |
-          STORAGE_ACCOUNT="<yourstorageacct>"
+          STORAGE_ACCOUNT="datalake31052025"
           CONTAINER="adf-artifacts"
           SAS="${{ steps.sas.outputs.sas_token }}"
 
