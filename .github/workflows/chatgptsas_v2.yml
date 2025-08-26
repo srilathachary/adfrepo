@@ -123,7 +123,7 @@ jobs:
           #   --expiry $EXPIRY \
           #   --as-user \
           #   --auth-mode login -o tsv)
-          # echo "template_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ARMTemplateForFactory.json?$TEMPLATE_SAS" >> $GITHUB_OUTPUT
+          echo "template_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ARMTemplateForFactory.json?$TEMPLATE_SAS" >> $GITHUB_OUTPUT
           # echo "params_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ARMTemplateParametersForFactory.json?$PARAMS_SAS" >> $GITHUB_OUTPUT
 
       # 5. Deploy ADF
@@ -132,4 +132,4 @@ jobs:
           az deployment group create \
             --resource-group Ravi_RG \
             --template-uri "${{ steps.sas.outputs.template_uri }}" \
-            --parameters "${{ steps.sas.outputs.params_uri }}"
+            #--parameters "${{ steps.sas.outputs.params_uri }}"
