@@ -1,0 +1,79 @@
+name: Deploy ADF with Linked Templates
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # 1. Authenticate with Azure using Federated Credentials or client secret
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+      # 2. Upload linked templates + parameters to storage
+      - name: Upload ARM artifacts to blob
+        run: |
+          STORAGE_ACCOUNT="datalake31052025"
+          CONTAINER="adf-artifacts"
+
+          # Create container if not exists
+          az storage container create \
+            --name $CONTAINER \
+            --account-name $STORAGE_ACCOUNT \
+            --auth-mode login
+
+          # Upload linked templates
+          az storage blob upload-batch \
+            --account-name $STORAGE_ACCOUNT \
+            --auth-mode login \
+            --destination $CONTAINER \
+            --source linkedTemplates
+
+          # Upload override parameters
+          az storage blob upload \
+            --account-name $STORAGE_ACCOUNT \
+            --auth-mode login \
+            --container-name $CONTAINER \
+            --file override_parameters/ARMTemplateParametersForFactory_DEV.json \
+            --name ARMTemplateParametersForFactory_DEV.json
+
+      # 3. Generate SAS token (read-only, valid 1h)
+      - name: Generate SAS token
+        id: sas
+        run: |
+          STORAGE_ACCOUNT="<yourstorageacct>"
+          CONTAINER="adf-artifacts"
+
+          SAS=$(az storage container generate-sas \
+            --account-name $STORAGE_ACCOUNT \
+            --auth-mode login \
+            --name $CONTAINER \
+            --permissions r \
+            --expiry $(date -u -d "1 hour" '+%Y-%m-%dT%H:%MZ') \
+            --https-only | tr -d '"')
+
+          echo "sas_token=$SAS" >> $GITHUB_OUTPUT
+
+      # 4. Deploy ADF ARM template
+      - name: Deploy ARM template
+        run: |
+          STORAGE_ACCOUNT="<yourstorageacct>"
+          CONTAINER="adf-artifacts"
+          SAS="${{ steps.sas.outputs.sas_token }}"
+
+          TEMPLATE_URI="https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ARMTemplateForFactory.json?$SAS"
+          PARAMS_URI="https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ARMTemplateParametersForFactory_DEV.json?$SAS"
+
+          az deployment group create \
+            --resource-group Ravi_RG \
+            --template-uri "$TEMPLATE_URI" \
+            --parameters "$PARAMS_URI"
