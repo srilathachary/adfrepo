@@ -34,8 +34,7 @@ jobs:
             --name $BLOB \
             --permissions r \
             --expiry $EXPIRY \
-            --auth-mode login \
-            --as-user \
+            --auth-mode key \
             --output tsv)
 
           # Build the full URL
