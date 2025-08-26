@@ -1,0 +1,34 @@
+name: Publish Override Parameters to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # adjust if you use another branch
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Copy override parameters
+        run: |
+          mkdir -p public/override_parameters
+          cp override_parameters/ARMTemplateParametersForFactory_DEV.json public/override_parameters/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
