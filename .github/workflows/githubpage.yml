@@ -1,10 +1,11 @@
 name: Publish README to GitHub Pages
 
 on:
-  push:
-    branches:
-      - main   # change if your default branch is different
-
+  # push:
+  #   branches:
+  #     - main   # change if your default branch is different
+  workflow_dispatch:
+  
 permissions:
   contents: read
   pages: write

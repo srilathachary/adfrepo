@@ -66,7 +66,12 @@ jobs:
       # 1. Checkout repo
       - name: Checkout repo
         uses: actions/checkout@v4
-
+        
+      - name: Download ARM template artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ExportedArmTemplate
+          path: ./arm-template
       # 2. Login to Azure with SP
       - name: Azure Login
         uses: azure/login@v2
