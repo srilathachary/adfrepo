@@ -24,6 +24,10 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           enable-AzPSSession: true
 
+      - name: List files in the root directory
+        run: ls -la arm_templates_folder
+
+
       # 3. Upload linked templates + parameters
       - name: Upload ARM artifacts
         run: |
