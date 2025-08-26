@@ -1,4 +1,4 @@
-name: Deploy ADF ARM Template
+name: DSAS and Deploy
 
 on:
   workflow_dispatch:
