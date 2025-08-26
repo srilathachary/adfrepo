@@ -57,15 +57,19 @@ jobs:
         with:
           name: ExportedArmTemplate
           path: ./arm-template
-      # 2. Login to Azure with SP
-      - name: Azure Login
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          enable-AzPSSession: true
 
       - name: List files in the root directory
         run: ls -la ./arm-template
+
+
+      # # 2. Login to Azure with SP
+      # - name: Azure Login
+      #   uses: azure/login@v2
+      #   with:
+      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
+      #     enable-AzPSSession: true
+
+
 
       # # 3. Upload linked templates + parameters
       # - name: Upload ARM artifacts
