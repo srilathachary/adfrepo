@@ -17,4 +17,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: List files in the root directory
-        run: ls -la arm_templates_folder
+        run: ls -la .
