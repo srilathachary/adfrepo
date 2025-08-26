@@ -1,4 +1,4 @@
-name: Generate SAS and Deploy Working
+name: AV2-Generate SAS and Deploy Working
 
 on:
   push:
