@@ -1,0 +1,42 @@
+name: SAS and Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Azure CLI login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Generate SAS and Deploy
+        run: |
+          STORAGE_ACCOUNT="datalake31052025"
+          CONTAINER="data"
+          BLOB="ARMTemplateForFactory.json"
+          RESOURCE_GROUP="Ravi_RG"
+          EXPIRY="2025-08-27T12:00:00Z"
+
+          SAS_TOKEN=$(az storage blob generate-sas \
+            --account-name $STORAGE_ACCOUNT \
+            --container-name $CONTAINER \
+            --name $BLOB \
+            --permissions r \
+            --expiry $EXPIRY \
+            --auth-mode key \
+            --output tsv)
+
+          BLOB_URL="https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/$BLOB?$SAS_TOKEN"
+
+          echo "Using template: $BLOB_URL"
+
+          az deployment group create \
+            --resource-group $RESOURCE_GROUP \
+            --template-uri "$BLOB_URL" \
+            --parameters "@./override_parameters/ARMTemplateParametersForFactory_DEV.json"
