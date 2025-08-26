@@ -3,7 +3,7 @@ name: Publish README to GitHub Pages
 on:
   push:
     branches:
-      - main   # or your default branch
+      - main   # change if your default branch is different
 
 permissions:
   contents: read
