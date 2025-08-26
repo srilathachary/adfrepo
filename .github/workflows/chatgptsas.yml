@@ -76,4 +76,5 @@ jobs:
           az deployment group create \
             --resource-group Ravi_RG \
             --template-uri "$TEMPLATE_URI" \
-            --parameters "$PARAMS_URI"
+            --parameters "$PARAMS_URI" \
+            --debug
