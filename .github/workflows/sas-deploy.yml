@@ -30,7 +30,7 @@ jobs:
             --name $BLOB \
             --permissions r \
             --expiry $EXPIRY \
-            --auth-mode key \
+            --auth-mode login \
             --output tsv)
 
           BLOB_URL="https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/$BLOB?$SAS_TOKEN"
