@@ -1,10 +1,10 @@
 name: Publish Override Parameters to GitHub Pages
 
-# on:
-#   push:
-#     branches:
-#       - main  # adjust if you use another branch
-
+on:
+  # push:
+  #   branches:
+  #     - main  # adjust if you use another branch
+  workflow_dispatch:
 permissions:
   contents: write
   pages: write
