@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -66,7 +67,7 @@ jobs:
       # 1. Checkout repo
       - name: Checkout repo
         uses: actions/checkout@v4
-        
+
       - name: Download ARM template artifact
         uses: actions/download-artifact@v4
         with:
