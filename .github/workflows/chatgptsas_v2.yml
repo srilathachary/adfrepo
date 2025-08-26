@@ -107,7 +107,6 @@ jobs:
           STORAGE_ACCOUNT="datalake31052025"
           CONTAINER="adf-artifacts"
           EXPIRY=$(date -u -d "1 hour" '+%Y-%m-%dT%H:%MZ')
-
           TEMPLATE_SAS=$(az storage blob generate-sas \
             --account-name $STORAGE_ACCOUNT \
             --container-name $CONTAINER \
@@ -116,10 +115,16 @@ jobs:
             --expiry $EXPIRY \
             --as-user \
             --auth-mode login -o tsv)
-
-
+          PARAMS_SAS=$(az storage blob generate-sas \
+            --account-name $STORAGE_ACCOUNT \
+            --container-name $CONTAINER \
+            --name ARMTemplateParametersForFactory.json \
+            --permissions r \
+            --expiry $EXPIRY \
+            --as-user \
+            --auth-mode login -o tsv)
           echo "template_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ARMTemplateForFactory.json?$TEMPLATE_SAS" >> $GITHUB_OUTPUT
-          echo "params_uri="./override_parameters/ARMTemplateParametersForFactory_DEV.json"
+          echo "params_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ARMTemplateParametersForFactory.json?$PARAMS_SAS" >> $GITHUB_OUTPUT
 
       # 5. Deploy ADF
       - name: Deploy ARM template
