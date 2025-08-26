@@ -92,15 +92,6 @@ jobs:
             --name ARMTemplateForFactory.json \
             --overwrite
 
-          # Upload override parameters (overwrite existing)
-          az storage blob upload \
-            --account-name $STORAGE_ACCOUNT \
-            --auth-mode login \
-            --container-name $CONTAINER \
-            --file ./arm-template/ARMTemplateParametersForFactory.json \
-            --name ARMTemplateParametersForFactory.json \
-            --overwrite
-
       # 4. Generate SAS for templates + params using user delegation
       - name: Generate SAS URIs
         id: sas
@@ -118,8 +109,6 @@ jobs:
             --auth-mode login -o tsv)
 
           echo "template_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ARMTemplateForFactory.json?$TEMPLATE_SAS" >> $GITHUB_OUTPUT
-          echo "params_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ARMTemplateParametersForFactory.json?$PARAMS_SAS" >> $GITHUB_OUTPUT
-
 
       # 5. Deploy ADF
       - name: Deploy ARM template
