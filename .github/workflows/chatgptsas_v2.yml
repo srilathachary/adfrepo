@@ -92,12 +92,13 @@ jobs:
             --account-name $STORAGE_ACCOUNT \
             --auth-mode login
 
-          # Upload linked templates (overwrite existing)
-          az storage blob upload-batch \
+          # Upload override parameters (overwrite existing)
+          az storage blob upload \
             --account-name $STORAGE_ACCOUNT \
             --auth-mode login \
-            --destination $CONTAINER \
-            --source ./arm-template \
+            --container-name $CONTAINER \
+            --file ./arm-template/ARMTemplateParametersForFactory.json \
+            --name ARMTemplateParametersForFactor.json \
             --overwrite
 
       # 4. Generate SAS for templates + params using user delegation
