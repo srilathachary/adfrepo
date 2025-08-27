@@ -107,8 +107,8 @@ jobs:
             --auth-mode login -o tsv)
 
           echo "containerSas=?$CONTAINER_SAS" >> $GITHUB_OUTPUT
-          echo "containerUri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER" >> $GITHUB_OUTPUT
-          echo "template_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ArmTemplate_master.json?$CONTAINER_SAS" >> $GITHUB_OUTPUT
+          echo "containerUri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/dev" >> $GITHUB_OUTPUT
+          echo "template_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/dev/ArmTemplate_master.json?$CONTAINER_SAS" >> $GITHUB_OUTPUT
 
       # 5. Deploy ADF
       - name: Deploy ARM template
