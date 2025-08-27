@@ -75,7 +75,7 @@ jobs:
       - name: Upload ARM artifacts
         run: |
           STORAGE_ACCOUNT="datalake31052025"
-          CONTAINER="adf-artifacts"
+          CONTAINER="adf-artifacts-dev"
 
           # Create container if not exists
           az storage container create \
@@ -97,7 +97,7 @@ jobs:
         id: sas
         run: |
           STORAGE_ACCOUNT="datalake31052025"
-          CONTAINER="adf-artifacts"
+          CONTAINER="adf-artifacts-dev"
           EXPIRY=$(date -u -d "1 hour" '+%Y-%m-%dT%H:%MZ')
           TEMPLATE_SAS=$(az storage blob generate-sas \
             --account-name $STORAGE_ACCOUNT \
