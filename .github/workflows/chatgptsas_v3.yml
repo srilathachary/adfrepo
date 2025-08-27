@@ -98,7 +98,7 @@ jobs:
           STORAGE_ACCOUNT="datalake31052025"
           CONTAINER="adf-artifacts-dev"
           EXPIRY=$(date -u -d "1 hour" '+%Y-%m-%dT%H:%MZ')
-          TEMPLATE_SAS=$(az storage container  generate-sas \
+          CONTAINER_SAS=$(az storage container  generate-sas \
             --account-name $STORAGE_ACCOUNT \
             --name $CONTAINER \
             --permissions r \
@@ -106,7 +106,9 @@ jobs:
             --as-user \
             --auth-mode login -o tsv)
 
-          echo "template_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ArmTemplateParameters_master.json?$TEMPLATE_SAS" >> $GITHUB_OUTPUT
+          echo "containerSas=$CONTAINER_SAS" >> $GITHUB_OUTPUT
+          echo "containerUri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER" >> $GITHUB_OUTPUT
+          echo "template_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ArmTemplate_master.json" >> $GITHUB_OUTPUT
 
       # 5. Deploy ADF
       - name: Deploy ARM template
@@ -114,4 +116,7 @@ jobs:
           az deployment group create \
             --resource-group Ravi_RG \
             --template-uri "${{ steps.sas.outputs.template_uri }}" \
-            --parameters @./override_parameters/ARMTemplateParametersForFactory_DEV.json
+            --parameters \
+                @./override_parameters/ARMTemplateParametersForFactory_DEV.json \
+                containerSasToken "${{ steps.sas.outputs.containerSas }}" \
+                containerUri "${{ steps.sas.outputs.containerUri }}"
