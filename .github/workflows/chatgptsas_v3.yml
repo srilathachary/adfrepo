@@ -1,0 +1,118 @@
+name: AV3-LinkedTemplates
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build ADF Template
+    runs-on: ubuntu-latest
+    environment: dev    
+
+    steps:
+      # 1. Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Setup Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+
+      # 3. Install npm packages
+      - name: Install npm packages
+        working-directory: ADF_Pipeline/Ingestion/build
+        run: npm install
+
+      # 4. Validate ADF resources
+      - name: Validate ADF resources
+        working-directory: ADF_Pipeline/Ingestion/build
+        run: |
+          npm run build validate ../../Ingestion \
+            --resource-id "/subscriptions/3915c783-2b04-4f6f-94d4-8d3ac1d3deb5/resourceGroups/Ravi_RG/providers/Microsoft.DataFactory/factories/practiceadf20252025"
+
+      # 5. Export ADF ARM template
+      - name: Export ADF ARM template
+        working-directory: ADF_Pipeline/Ingestion/build
+        run: |
+          npm run build export ../../Ingestion \
+            --resource-id "/subscriptions/3915c783-2b04-4f6f-94d4-8d3ac1d3deb5/resourceGroups/Ravi_RG/providers/Microsoft.DataFactory/factories/practiceadf20252025" ExportedArmTemplate
+
+      # 6. Upload ARM template artifact to Actions
+      - name: Upload ARM template artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ExportedArmTemplate
+          path: ADF_Pipeline/Ingestion/build/ExportedArmTemplate
+
+      - name: Download ARM template artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ExportedArmTemplate
+          path: ./arm-template
+
+      - name: List files in the root directory
+        run: ls -la ./arm-template
+
+
+      # 2. Login to Azure with SP
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+
+
+
+      # 3. Upload linked templates + parameters
+      - name: Upload ARM artifacts
+        run: |
+          STORAGE_ACCOUNT="datalake31052025"
+          CONTAINER="adf-artifacts-dev"
+
+          # Create container if not exists
+          az storage container create \
+            --name $CONTAINER \
+            --account-name $STORAGE_ACCOUNT \
+            --auth-mode login
+
+          # Upload linked templates (overwrite existing)
+          az storage blob upload-batch \
+            --account-name $STORAGE_ACCOUNT \
+            --auth-mode login \
+            --destination $CONTAINER \
+            --source ./arm-template/linkedTemplates \
+            --overwrite
+
+      # 4. Generate SAS for templates + params using user delegation
+      - name: Generate SAS URIs
+        id: sas
+        run: |
+          STORAGE_ACCOUNT="datalake31052025"
+          CONTAINER="adf-artifacts-dev"
+          EXPIRY=$(date -u -d "1 hour" '+%Y-%m-%dT%H:%MZ')
+          TEMPLATE_SAS=$(az storage blob generate-sas \
+            --account-name $STORAGE_ACCOUNT \
+            --container-name $CONTAINER \
+            --name ARMTemplateForFactory.json \
+            --permissions r \
+            --expiry $EXPIRY \
+            --as-user \
+            --auth-mode login -o tsv)
+
+          echo "template_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ArmTemplateParameters_master.json?$TEMPLATE_SAS" >> $GITHUB_OUTPUT
+
+      # 5. Deploy ADF
+      - name: Deploy ARM template
+        run: |
+          az deployment group create \
+            --resource-group Ravi_RG \
+            --template-uri "${{ steps.sas.outputs.template_uri }}" \
+            --parameters @./override_parameters/ARMTemplateParametersForFactory_DEV.json
