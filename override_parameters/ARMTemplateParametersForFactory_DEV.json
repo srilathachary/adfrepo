@@ -19,6 +19,12 @@
         },
         "default_properties_g_param_5_value": {
             "value": "main_5"
+        },
+        "containerUri": {
+            "value": "123"
+        },
+        "containerSasToken": {
+            "value": "123"
         }
     }
 }
