@@ -106,7 +106,7 @@ jobs:
             --as-user \
             --auth-mode login -o tsv)
 
-          echo "containerSas=$CONTAINER_SAS" >> $GITHUB_OUTPUT
+          echo "containerSas=?$CONTAINER_SAS" >> $GITHUB_OUTPUT
           echo "containerUri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER" >> $GITHUB_OUTPUT
           echo "template_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ArmTemplate_master.json?$CONTAINER_SAS" >> $GITHUB_OUTPUT
 
@@ -118,5 +118,5 @@ jobs:
             --template-uri "${{ steps.sas.outputs.template_uri }}" \
             --parameters \
                 @./override_parameters/ARMTemplateParametersForFactory_DEV.json \
-                containerSasToken "${{ steps.sas.outputs.containerSas }}" \
-                containerUri "${{ steps.sas.outputs.containerUri }}"
+                containerSasToken="${{ steps.sas.outputs.containerSas }}" \
+                containerUri="${{ steps.sas.outputs.containerUri }}"
