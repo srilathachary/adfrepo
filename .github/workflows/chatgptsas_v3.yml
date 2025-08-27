@@ -110,21 +110,13 @@ jobs:
           echo "containerUri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER" >> $GITHUB_OUTPUT
           echo "template_uri=https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER/ArmTemplate_master.json?$CONTAINER_SAS" >> $GITHUB_OUTPUT
 
-      # # 5. Deploy ADF
-      # - name: Deploy ARM template
-      #   run: |
-      #     az deployment group create \
-      #       --resource-group Ravi_RG \
-      #       --template-uri "${{ steps.sas.outputs.template_uri }}" \
-      #       --parameters \
-      #           @./override_parameters/ARMTemplateParametersForFactory_DEV.json \
-      #           containerSasToken "${{ steps.sas.outputs.containerSas }}" \
-      #           containerUri "${{ steps.sas.outputs.containerUri }}"
-
-      - name: Deploy Linked Templates
-        uses: Azure/data-factory-deploy-action@v1.2.0
-        with:
-          resourceGroupName: "Ravi_RG"
-          dataFactoryName: "practiceadf20252025"
-          armTemplateFile: "${{ steps.sas.outputs.template_uri }}"
-          armTemplateParametersFile: "./override_parameters/ARMTemplateParametersForFactory_DEV.json"
+      # 5. Deploy ADF
+      - name: Deploy ARM template
+        run: |
+          az deployment group create \
+            --resource-group Ravi_RG \
+            --template-uri "${{ steps.sas.outputs.template_uri }}" \
+            --parameters \
+                @./override_parameters/ARMTemplateParametersForFactory_DEV.json \
+                containerSasToken "${{ steps.sas.outputs.containerSas }}" \
+                containerUri "${{ steps.sas.outputs.containerUri }}"
