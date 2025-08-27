@@ -87,7 +87,7 @@ jobs:
           az storage blob upload-batch \
             --account-name $STORAGE_ACCOUNT \
             --auth-mode login \
-            --destination $CONTAINER \
+            --destination $CONTAINER/dev \
             --source ./arm-template/linkedTemplates \
             --overwrite
 
