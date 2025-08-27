@@ -98,10 +98,9 @@ jobs:
           STORAGE_ACCOUNT="datalake31052025"
           CONTAINER="adf-artifacts-dev"
           EXPIRY=$(date -u -d "1 hour" '+%Y-%m-%dT%H:%MZ')
-          TEMPLATE_SAS=$(az storage blob generate-sas \
+          TEMPLATE_SAS=$(az storage container  generate-sas \
             --account-name $STORAGE_ACCOUNT \
-            --container-name $CONTAINER \
-            --name ARMTemplateForFactory.json \
+            --name $CONTAINER \
             --permissions r \
             --expiry $EXPIRY \
             --as-user \

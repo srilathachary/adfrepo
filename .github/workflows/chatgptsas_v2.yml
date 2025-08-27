@@ -1,9 +1,9 @@
 name: AV2-Generate SAS and Deploy Working
 
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:
 
 permissions:
